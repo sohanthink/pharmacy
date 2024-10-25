@@ -2,7 +2,7 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
 
-import icons from "../../constants/icons";
+import { home } from "../../constants/icons";
 
 const TabIcon = ({ icon, focused, color, name }) => {
     return (
@@ -31,11 +31,10 @@ const TabLayout = () => {
             <Tabs.Screen
                 name='dashboard'
                 options={{
-                    title: 'dashboard',
+                    title: 'Dashboard',
                     headerShown: false,
                     tabBarIcon: ({ color, focused }) => (
-                        <TabIcon name="Home" color={color} focused={focused} icon={icons.home} />
-
+                        <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
                     )
                 }}
             />
@@ -43,11 +42,10 @@ const TabLayout = () => {
             <Tabs.Screen
                 name='create'
                 options={{
-                    title: 'create',
+                    title: 'Create',
                     headerShown: false,
                     tabBarIcon: ({ color, focused }) => (
-                        <TabIcon name="Home" color={color} focused={focused} icon={icons.home} />
-
+                        <TabIcon name="Create" color={color} focused={focused} icon={home} />
                     )
                 }}
             />
@@ -55,4 +53,4 @@ const TabLayout = () => {
     )
 }
 
-export default TabLayout
+export default TabLayout;

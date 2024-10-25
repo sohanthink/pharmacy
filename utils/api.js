@@ -3,31 +3,24 @@ import axios from "axios";
 const API_BASE_URL = "https://pharmacy.sohanthink.com/api"; // replace with your actual API URL
 
 // Function to handle API requests
-const apiRequest = async (method, url, data = {}, headers = {}) => {
+export const Login = async (email, password) => {
   try {
-    const response = await axios({
-      method,
-      url: `${API_BASE_URL}${url}`,
-      data,
-      headers,
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/auth/login`,
+      {
+        email_or_phone: email,
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json", // Ensure JSON data
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
-    console.error("API error:", error);
+    console.error("API error/while login:", error);
     throw error.response ? error.response.data : new Error("Network Error");
   }
-};
-
-// Example functions for login, sign up, etc.
-export const login = (email, password) => {
-  return apiRequest("POST", "/auth/login", { email, password });
-};
-
-export const getUserProfile = (token) => {
-  return apiRequest(
-    "GET",
-    "/user/profile",
-    {},
-    { Authorization: `Bearer ${token}` }
-  );
 };
