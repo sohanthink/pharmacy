@@ -85,21 +85,22 @@ const SignIn = () => {
 
     return (
         <SafeAreaView className="h-full bg-lightBg">
-            <StatusBar style="auto" />
+            <StatusBar style="auto" className="text-darkBg" />
             <View className="flex-1 items-center justify-center p-5">
                 <Text className="font-pbold text-primary text-5xl mb-8">
                     Olpo Takay Beshi LAv.
                 </Text>
 
                 {error && (
-                    <Text className="text-red-600 mb-4">
+                    <Text className="text-red-600 mb-4 font-pbold">
                         {error}
                     </Text>
                 )}
 
                 <TextInput
-                    className={`border w-full mb-4 p-2 text-black ${error ? 'border-red-600' : 'border-primary'}`}
-                    placeholder="Email"
+                    className={`border w-full mb-4 p-2 placeholder:text-red-500 text-black ${error ? 'border-red-600' : 'border-primary'}`}
+                    placeholder="Email lekh BAinchod"
+                    placeholderTextColor={error ? "red" : '#202020'}
                     value={form.email}
                     onChangeText={(e) => setForm({ ...form, email: e })}
                     keyboardType="email-address"
@@ -108,7 +109,8 @@ const SignIn = () => {
 
                 <TextInput
                     className={`border w-full mb-4 p-2 ${error ? 'border-red-600' : 'border-primary'}`}
-                    placeholder="Password"
+                    placeholder="Password Lekh"
+                    placeholderTextColor={error ? "red" : '#202020'}
                     value={form.password}
                     onChangeText={(e) => setForm({ ...form, password: e })}
                     secureTextEntry

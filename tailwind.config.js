@@ -7,6 +7,7 @@ module.exports = {
         primary: "#3A65FF",
         secondary: "#27B460",
         lightBg: "#EDF0FF",
+        darkBg: "#202020",
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

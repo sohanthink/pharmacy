@@ -3,6 +3,11 @@
     "name": "pharmacy",
     "slug": "pharmacy",
     "scheme": "pharmacy",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "51253b98-3358-47ed-aac6-d120c46e540b"
+      }
+    }
   }
 }

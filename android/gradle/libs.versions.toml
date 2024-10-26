@@ -1,0 +1,7 @@
+[versions]
+react-native = "0.73.6"
+# Add other versions as needed
+
+[libraries]
+react-native = { module = "com.facebook.react:react-native:$react-native" }
+# Add other libraries as needed
