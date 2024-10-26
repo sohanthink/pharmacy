@@ -1,4 +1,4 @@
-import { View, Text, Button, Alert, TextInput, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, Text, Alert, TextInput, ActivityIndicator, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { router } from "expo-router";
 import { Login } from "../utils/api";
@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import * as SecureStore from 'expo-secure-store';
 
+
 async function saveToken(access_token) {
     try {
         await SecureStore.setItemAsync('accessToken', access_token);
@@ -14,6 +15,7 @@ async function saveToken(access_token) {
         console.error("Error saving token:", error);
     }
 }
+
 
 async function getToken() {
     try {
@@ -25,7 +27,6 @@ async function getToken() {
 }
 
 
-
 const SignIn = () => {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
@@ -35,10 +36,8 @@ const SignIn = () => {
         const checkLogin = async () => {
             try {
                 const token = await getToken();
-                console.log("Token fetched:", token);  // Debug log
-
+                // console.log("Token fetched:", token);  
                 if (token) {
-                    // If the token exists, redirect to the dashboard
                     router.replace("/dashboard");
                 } else {
                     // No token, allow user to log in
@@ -49,7 +48,6 @@ const SignIn = () => {
                 setLoading(false);  // Make sure to stop loading if there's an error
             }
         };
-
         checkLogin();
     }, []);
 
@@ -62,11 +60,12 @@ const SignIn = () => {
             router.replace("/dashboard");
         },
         onError: (error) => {
-            setError(error.message || 'Something went wrong');
+            setError(error.message || error.error || 'Something went wrong');
         }
     });
 
-    const handleSignIn = () => {
+
+    const handleSignIn = async () => {
         if (!form.email || !form.password) {
             setError('Please enter both email and password');
             return;
@@ -75,6 +74,7 @@ const SignIn = () => {
         mutation.mutate();
     };
 
+
     if (loading) {
         return (
             <View className="flex-1 items-center justify-center">
@@ -82,6 +82,7 @@ const SignIn = () => {
             </View>
         );
     }
+
 
     return (
         <SafeAreaView className="h-full bg-lightBg">
@@ -117,19 +118,16 @@ const SignIn = () => {
                     editable={!mutation.isLoading}
                 />
 
-                {mutation.isLoading ? (
-                    <ActivityIndicator size="large" color="#FFA001" />
-                ) : (
-                    <TouchableOpacity
-                        className="bg-primary p-3 w-full rounded-lg"
-                        onPress={handleSignIn}
-                        disabled={mutation.isLoading}
-                    >
-                        <Text className="text-center text-white font-semibold">
-                            Sign In
-                        </Text>
-                    </TouchableOpacity>
-                )}
+
+                <TouchableOpacity
+                    className={`p-3 w-full rounded-lg ${mutation.isPending ? 'bg-gray-400' : 'bg-primary'}`}
+                    onPress={handleSignIn}
+                    disabled={mutation.isPending}
+                >
+                    <Text className="text-center text-white font-semibold">
+                        {mutation.isPending ? 'Signing In...' : 'Sign In'}
+                    </Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
