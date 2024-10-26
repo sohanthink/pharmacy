@@ -1,19 +1,64 @@
 import { View, Text, Button, Alert, TextInput, ActivityIndicator, TouchableOpacity } from "react-native";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { router } from "expo-router";
 import { Login } from "../utils/api";
 import { useMutation } from '@tanstack/react-query';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import * as SecureStore from 'expo-secure-store';
+
+async function saveToken(access_token) {
+    try {
+        await SecureStore.setItemAsync('accessToken', access_token);
+    } catch (error) {
+        console.error("Error saving token:", error);
+    }
+}
+
+async function getToken() {
+    try {
+        return await SecureStore.getItemAsync('accessToken');
+    } catch (error) {
+        console.error("Error retrieving token:", error);
+        return null;
+    }
+}
+
+
 
 const SignIn = () => {
     const [form, setForm] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                const token = await getToken();
+                console.log("Token fetched:", token);  // Debug log
+
+                if (token) {
+                    // If the token exists, redirect to the dashboard
+                    router.replace("/dashboard");
+                } else {
+                    // No token, allow user to log in
+                    setLoading(false);  // Disable the loading screen and show login form
+                }
+            } catch (error) {
+                console.error("Error during token check:", error);
+                setLoading(false);  // Make sure to stop loading if there's an error
+            }
+        };
+
+        checkLogin();
+    }, []);
+
 
     const mutation = useMutation({
         mutationFn: () => Login(form.email, form.password),
-        onSuccess: (data) => {
-            Alert.alert('Success', `Welcome back, ${data.name}!`);
+        onSuccess: async (data) => {
+            // Alert.alert('Success', `Welcome back, ${data.access_token}!`);
+            await saveToken(data.access_token)
             router.replace("/dashboard");
         },
         onError: (error) => {
@@ -29,6 +74,14 @@ const SignIn = () => {
         setError(null);
         mutation.mutate();
     };
+
+    if (loading) {
+        return (
+            <View className="flex-1 items-center justify-center">
+                <ActivityIndicator size="large" color="#FFA001" />
+            </View>
+        );
+    }
 
     return (
         <SafeAreaView className="h-full bg-lightBg">
