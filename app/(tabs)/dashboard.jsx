@@ -4,19 +4,11 @@ import icons from '../../constants/icons'
 import { router } from 'expo-router';
 
 import * as SecureStore from 'expo-secure-store';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
-const Drawer = createDrawerNavigator();
 
 
-function MyDrawer() {
-    return (
-        <Drawer.Navigator>
-            <Drawer.Screen name="Feed" component={Feed} />
-            <Drawer.Screen name="Article" component={Article} />
-        </Drawer.Navigator>
-    );
-}
 
 
 async function logout() {
@@ -28,9 +20,11 @@ async function logout() {
     }
 }
 
-const dashboard = () => {
+const Dashboard = () => {
     return (
-        <View>
+        <SafeAreaView className="h-full bg-lightBg">
+            <StatusBar style="auto" className="text-darkBg" />
+
             <Image source={icons.mehedi} resizeMode='contain' />
             <TouchableOpacity
                 onPress={logout}
@@ -38,9 +32,8 @@ const dashboard = () => {
             >
                 <Text style={{ color: 'white', fontSize: 16 }}>Logout</Text>
             </TouchableOpacity>
-            {/* <MyDrawer /> */}
-        </View>
+        </SafeAreaView>
     )
 }
 
-export default dashboard
+export default Dashboard
