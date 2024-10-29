@@ -10,13 +10,22 @@ import { addsupplier } from '../../../utils/api'
 const Create = () => {
 
     const [error, setError] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [form, setForm] = useState({
         supplier_name: "",
         supplier_email: "",
         supplier_phone: "",
         company_name: "",
-        supplier_no: "",
     })
+
+    // Reset form fields
+    const resetForm = () => setForm({
+        supplier_name: "",
+        supplier_email: "",
+        supplier_phone: "",
+        company_name: "",
+    });
 
     const mutation = useMutation({
         mutationFn: () => addsupplier(
@@ -24,37 +33,63 @@ const Create = () => {
             form.supplier_email,
             form.supplier_phone,
             form.company_name,
-            form.supplier_no,
         ),
         onSuccess: async (data) => {
-            console.log(data);
+            setSuccessMessage("Supplier added successfully!");
+            resetForm();
         },
         onError: (error) => {
-            setError(error.message)
-            console.log(error.message);
-
-        }
+            setError(error.message || "An error occurred while adding the supplier.")
+        },
+        onSettled: () => {
+            setIsLoading(false);
+        },
     })
 
+    // Email validation
+    const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+
+    const validateForm = () => {
+        if (!form.supplier_name) return "Please provide the supplier name.";
+        if (!form.supplier_email || !validateEmail(form.supplier_email)) return "Please enter a valid Supplier Email.";
+        if (!form.company_name) return "Company Name is required.";
+        if (!form.supplier_phone) return "Supplier Phone number is required.";
+        if (isNaN(form.supplier_phone)) return "Supplier Phone must contain only numbers.";
+        return null;
+    };
+
     const submit = async () => {
-        console.log(form);
-        if (!form.supplier_email || form.company_name) {
-            setError("Supplier Email And Company NAme required")
+        setIsLoading(true);
+        setError(null);
+        setSuccessMessage(null);
+
+        const validationError = validateForm();
+        if (validationError) {
+            setError(validationError);
+            setIsLoading(false);
             return;
         }
-        setError(null)
-        mutation.mutate()
+
+        try {
+            await mutation.mutateAsync(); // Use mutateAsync for proper async handling
+        } catch (error) {
+            setError("An error occurred while adding the supplier.");
+        }
     }
 
     return (
         <SafeAreaView className="bg-lightBg h-full w-full">
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-5">
                 <Title text="Add Supplier" />
-                <Title>{error}</Title>
+                {(error || successMessage) && (
+                    <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>
+                        {error || successMessage}
+                    </Text>
+                )}
                 <View className="w-full flex-1">
                     <FormField
                         styles='mt-3'
-                        title='name'
+                        title='Name'
                         value={form.supplier_name}
                         handleChangeText={(e) => setForm({ ...form, supplier_name: e })}
                         placeholder='Enter Supplier Halar Name'
@@ -80,17 +115,12 @@ const Create = () => {
                         handleChangeText={(e) => setForm({ ...form, company_name: e })}
                         placeholder='Enter Supplier Company Name'
                     />
-                    <FormField
-                        styles='mt-3'
-                        title='Supplier ID'
-                        value={form.supplier_no}
-                        handleChangeText={(e) => setForm({ ...form, supplier_no: e })}
-                        placeholder='Enter an specific id for supplier'
-                    />
+
                     <CustomButton
                         title='Add Supplier'
                         handlePress={submit}
                         containerStyles="mt-3"
+                        isLoading={isLoading}
                     />
                 </View>
             </ScrollView>

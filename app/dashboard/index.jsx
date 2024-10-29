@@ -1,9 +1,10 @@
-import { View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import * as SecureStore from 'expo-secure-store';
 import { router, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 async function logout() {
     try {

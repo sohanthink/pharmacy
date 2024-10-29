@@ -1,22 +1,39 @@
+// utils/api.js
 import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 const API_BASE_URL = "https://pharmacy.sohanthink.com/api";
 
-// Function to handle API requests
+// Create axios instance
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    "Content-Type": "application/json", // Default content type
+  },
+});
+
+// Interceptor to add token to every request
+api.interceptors.request.use(
+  async (config) => {
+    const token = await SecureStore.getItemAsync("accessToken");
+    if (!config.url.includes("/auth/login") && token) {
+      config.headers.Authorization = `Bearer ${token}`;
+      console.log("token:", token);
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Function to handle login
 export const Login = async (email, password) => {
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/auth/login`,
-      {
-        email_or_phone: email,
-        password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json", // Ensure JSON data
-        },
-      }
-    );
+    const response = await api.post("/auth/login", {
+      email_or_phone: email,
+      password,
+    });
     return response.data;
   } catch (error) {
     console.error("API error/while login:", error);
@@ -24,33 +41,25 @@ export const Login = async (email, password) => {
   }
 };
 
-// Function to Add Supplier requests
+// Function to add a supplier
 export const addsupplier = async (
   supplier_name,
   supplier_email,
   supplier_phone,
-  company_name,
-  supplier_no
+  company_name
 ) => {
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/user/medicine_company`,
-      {
-        supplier_name,
-        supplier_email,
-        supplier_phone,
-        company_name,
-        supplier_no,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json", // Ensure JSON data
-        },
-      }
-    );
+    const response = await api.post("/user/medicine_company", {
+      supplier_name,
+      supplier_email,
+      supplier_phone,
+      company_name,
+    });
     return response.data;
   } catch (error) {
     console.error("API error/while Adding Supplier:", error);
     throw error.response ? error.response.data : new Error("Network Error");
   }
 };
+
+export default api;
