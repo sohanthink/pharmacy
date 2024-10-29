@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
 import React from 'react'
-import Drawer from 'expo-router/drawer'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-
+import Drawer from 'expo-router/drawer'
 
 
 const _layout = () => {
@@ -10,13 +8,13 @@ const _layout = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer
                 screenOptions={{
+                    headerShown: false,
                     // drawerLabelStyle: {
                     //     // marginLeft: -20
                     // },
-                    headerShown: false,
-                    // drawerActiveBackgroundColor: 'gray',
-                    // drawerActiveTintColor: 'white',
-                    // drawerInactiveTintColor: 'white'
+                    drawerActiveBackgroundColor: 'red',
+                    drawerActiveTintColor: 'white',
+                    drawerInactiveTintColor: 'black',
                 }}
             // drawerContent={CustomDrawerContent}
             >
@@ -58,7 +56,7 @@ const _layout = () => {
                     }}
                 />
             </Drawer>
-        </GestureHandlerRootView>
+        </GestureHandlerRootView >
     )
 }
 

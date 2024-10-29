@@ -1,7 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native'
 import React from 'react'
 import * as SecureStore from 'expo-secure-store';
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 async function logout() {
     try {
@@ -14,15 +15,18 @@ async function logout() {
 
 const index = () => {
     return (
-        <View>
-            <Text>NIce Dashboard</Text>
-            <TouchableOpacity
-                onPress={logout}
-                style={{ backgroundColor: 'blue', padding: 10, marginTop: 20, borderRadius: 5 }}
-            >
-                <Text style={{ color: 'white', fontSize: 16 }}>Logout</Text>
-            </TouchableOpacity>
-        </View>
+        <SafeAreaView className="bg-lightBg h-full w-full">
+            <ScrollView className="">
+                <StatusBar style="auto" className="text-darkBg" />
+                <Text>NIce Dashboard</Text>
+                <TouchableOpacity
+                    onPress={logout}
+                    style={{ backgroundColor: 'blue', padding: 10, marginTop: 20, borderRadius: 5 }}
+                >
+                    <Text style={{ color: 'white', fontSize: 16 }}>Logout</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

@@ -2,8 +2,6 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Drawer } from 'expo-router/drawer';
 
 const useLoadFonts = () => {
     const [fontsLoaded] = useFonts({
@@ -50,13 +48,9 @@ export default function RootLayout() {
     }
 
     return (
-        // <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
+            <Stack.Screen name="dashboard" options={{ headerShown: false }} />
         </Stack>
-
-        // </GestureHandlerRootView>
-
     );
 }
