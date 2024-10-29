@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../../../components/CustomButton'
 import { useMutation } from '@tanstack/react-query'
 import { addsupplier } from '../../../utils/api'
+import CustomHeader from '../../../components/CustomHeader'
 
 const Create = () => {
 
@@ -80,6 +81,7 @@ const Create = () => {
     return (
         <SafeAreaView className="bg-lightBg h-full w-full">
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-5">
+                <CustomHeader />
                 <Title text="Add Supplier" />
                 {(error || successMessage) && (
                     <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>
@@ -89,28 +91,28 @@ const Create = () => {
                 <View className="w-full flex-1">
                     <FormField
                         styles='mt-3'
-                        title='Name'
+                        title='Full Name'
                         value={form.supplier_name}
                         handleChangeText={(e) => setForm({ ...form, supplier_name: e })}
                         placeholder='Enter Supplier Halar Name'
                     />
                     <FormField
                         styles='mt-3'
-                        title='Email'
+                        title='Email Address'
                         value={form.supplier_email}
                         handleChangeText={(e) => setForm({ ...form, supplier_email: e })}
                         placeholder='Enter Supplier Halar Email'
                     />
                     <FormField
                         styles='mt-3'
-                        title='Phone'
+                        title='Phone Number'
                         value={form.supplier_phone}
                         handleChangeText={(e) => setForm({ ...form, supplier_phone: e })}
                         placeholder='Enter Supplier Halar Phone'
                     />
                     <FormField
                         styles='mt-3'
-                        title='Company'
+                        title='Company Name'
                         value={form.company_name}
                         handleChangeText={(e) => setForm({ ...form, company_name: e })}
                         placeholder='Enter Supplier Company Name'
@@ -119,7 +121,7 @@ const Create = () => {
                     <CustomButton
                         title='Add Supplier'
                         handlePress={submit}
-                        containerStyles="mt-3"
+                        containerStyles="mt-4"
                         isLoading={isLoading}
                     />
                 </View>

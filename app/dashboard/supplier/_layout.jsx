@@ -2,8 +2,12 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
 import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
+import * as NavigationBar from 'expo-navigation-bar';
+
+NavigationBar.setBackgroundColorAsync('#161622');
 
 const _layout = () => {
+
     return (
         <Tabs
             screenOptions={{
@@ -44,6 +48,7 @@ const _layout = () => {
                     )
                 }}
             />
+
             {/* <Tabs.Screen
                 name="update"
                 options={{
