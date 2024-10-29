@@ -3,6 +3,7 @@ import React from 'react'
 import * as SecureStore from 'expo-secure-store';
 import { router, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { AntDesign } from '@expo/vector-icons';
 
 async function logout() {
     try {
@@ -23,7 +24,7 @@ const index = () => {
                     onPress={logout}
                     style={{ backgroundColor: 'blue', padding: 10, marginTop: 20, borderRadius: 5 }}
                 >
-                    <Text style={{ color: 'white', fontSize: 16 }}>Logout</Text>
+                    <Text style={{ color: 'white', fontSize: 16 }}><AntDesign name="logout" size={24} color="white" /> Logout</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>

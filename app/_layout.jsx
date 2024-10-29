@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useState, useEffect } from "react";
@@ -28,6 +29,8 @@ const LoadingScreen = () => (
 export default function RootLayout() {
     const [appIsReady, setAppIsReady] = useState(false);
     const fontsLoaded = useLoadFonts();
+    const queryClient = new QueryClient();
+
 
     useEffect(() => {
         const prepareApp = async () => {
@@ -48,9 +51,11 @@ export default function RootLayout() {
     }
 
     return (
-        <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="dashboard" options={{ headerShown: false }} />
-        </Stack>
+        <QueryClientProvider client={queryClient}>
+            <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="dashboard" options={{ headerShown: false }} />
+            </Stack>
+        </QueryClientProvider>
     );
 }
