@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from 'expo-router/drawer';
-import MainLayout from "./(tabs)/_layout";
-import AddSupplier from "./(tabs)/AddSupplier";
-import SupplierList from "./(tabs)/supplierList";
 
 const useLoadFonts = () => {
     const [fontsLoaded] = useFonts({
@@ -31,7 +28,6 @@ const LoadingScreen = () => (
 );
 
 export default function RootLayout() {
-
     const [appIsReady, setAppIsReady] = useState(false);
     const fontsLoaded = useLoadFonts();
 
@@ -54,31 +50,13 @@ export default function RootLayout() {
     }
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <Drawer.Navigator initialRouteName="Tabs">
-                <Drawer.Screen
-                    name="Tabs"
-                    component={MainLayout} // Use MainLayout which has Tabs
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-                {/* Additional drawer screens can be added here */}
-                <Drawer.Screen
-                    name="addSupplier"
-                    component={AddSupplier}
-                    options={{
-                        drawerLabel: 'Add Supplier',
-                    }}
-                />
-                <Drawer.Screen
-                    name="supplierList"
-                    component={SupplierList}
-                    options={{
-                        drawerLabel: 'Supplier List',
-                    }}
-                />
-            </Drawer.Navigator>
-        </GestureHandlerRootView>
+        // <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
+        </Stack>
+
+        // </GestureHandlerRootView>
+
     );
 }

@@ -1,8 +1,14 @@
 import { Tabs } from 'expo-router';
 import { View, Text, Image } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { home } from '../../constants/icons';
-import Dashboard from './dashboard'; // Ensure this imports correctly
-import Create from './create';
+import AddSupplier from './screens/addSupplier';
+import SupplierList from './screens/supplierList';
+import dashboard from './dashboard';
+
+// Define the drawer navigator
+const Drawer = createDrawerNavigator();
 
 // Icon component for tabs
 const TabIcon = ({ icon, focused, color, name }) => {
@@ -34,7 +40,6 @@ const TabLayout = () => {
         >
             <Tabs.Screen
                 name="dashboard"
-                component={Dashboard}
                 options={{
                     title: 'Dashboard',
                     headerShown: false,
@@ -45,7 +50,6 @@ const TabLayout = () => {
             />
             <Tabs.Screen
                 name="create"
-                component={Create} // Ensure you have this component defined
                 options={{
                     title: 'Create',
                     headerShown: false,
@@ -58,12 +62,47 @@ const TabLayout = () => {
     );
 };
 
+
 // Main Layout component integrating both Drawer and Tabs
 const MainLayout = () => {
     return (
-        <View style={{ flex: 1 }}>
-            <TabLayout />
-        </View>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Drawer.Navigator initialRouteName="dashboard">
+                <Drawer.Screen
+                    name="Tabs"
+                    component={TabLayout}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+                <Drawer.Screen
+                    name="dashboard"
+                    component={dashboard}
+                    options={{
+                        headerShown: false,
+                        drawerLabel: 'dashboard',
+                    }}
+                />
+                <Drawer.Screen
+                    name="AddSupplier"
+                    component={AddSupplier}
+                    options={{
+                        headerShown: false,
+                        drawerLabel: 'Another Screen',
+                    }}
+                />
+                <Drawer.Screen
+                    name="supplierList"
+                    component={SupplierList}
+                    options={{
+                        headerShown: false,
+                        drawerLabel: 'supplierlist',
+                    }}
+                />
+                {/* Add more Drawer screens here if needed */}
+            </Drawer.Navigator>
+        </GestureHandlerRootView>
     );
 };
 
