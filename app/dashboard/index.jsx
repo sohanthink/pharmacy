@@ -5,6 +5,7 @@ import { router, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Layout from '../../components/Layout';
 
 async function logout() {
     try {
@@ -17,7 +18,7 @@ async function logout() {
 
 const index = () => {
     return (
-        <SafeAreaView className="bg-lightBg h-full w-full">
+        <Layout>
             <ScrollView className="">
                 <StatusBar style="auto" className="text-darkBg" />
                 <Text>NIce Dashboard</Text>
@@ -28,7 +29,7 @@ const index = () => {
                     <Text style={{ color: 'white', fontSize: 16 }}><AntDesign name="logout" size={24} color="white" /> Logout</Text>
                 </TouchableOpacity>
             </ScrollView>
-        </SafeAreaView>
+        </Layout>
     )
 }
 

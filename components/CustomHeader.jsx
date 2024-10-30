@@ -11,7 +11,7 @@ const CustomHeader = () => {
         navigation.dispatch(DrawerActions.openDrawer())
     }
     return (
-        <View className="flex-row items-center justify-between pb-5">
+        <View className="flex-row items-center justify-between px-5 py-2">
             <View><MaterialIcons onPress={closeDrawer} name="view-headline" size={40} color="black" /></View>
             <View className="flex-row gap-4 items-center">
                 <View>

@@ -1,5 +1,6 @@
 // utils/api.js
 import axios from "axios";
+import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
 const API_BASE_URL = "https://pharmacy.sohanthink.com/api";
@@ -25,6 +26,19 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle token expiry and redirect
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear token and redirect to login if unauthorized
+      await SecureStore.deleteItemAsync("accessToken");
+      router.replace("/"); // Redirect to the login or home screen
+    }
     return Promise.reject(error);
   }
 );

@@ -1,12 +1,20 @@
-import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-native';
-import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, ScrollView, Pressable, ActivityIndicator, RefreshControl } from 'react-native';
+import React, { useState } from 'react';
 import Title from '../../../components/Title';
-import CustomHeader from '../../../components/CustomHeader';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useFetchSuppliers } from '../../../utils/hooks';
+import Layout from '../../../components/Layout';
 
-const index = () => {
+const Index = () => {
+    const [refreshing, setRefreshing] = useState(false);
+    const { data: suppliers, isLoading, error, refetch } = useFetchSuppliers();
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await refetch(); // Re-fetch the suppliers data
+        setRefreshing(false);
+    };
+
     const handleUpdate = (id) => {
         console.log("Update supplier", id);
     };
@@ -15,11 +23,10 @@ const index = () => {
         console.log("Delete supplier", id);
     };
 
-    const { data: suppliers, isLoading, error } = useFetchSuppliers();
-
     if (isLoading) {
         return <ActivityIndicator size="large" color="#0000ff" className="flex-1 justify-center" />;
     }
+
     if (error) {
         return (
             <View className="flex-1 justify-center items-center">
@@ -29,9 +36,14 @@ const index = () => {
     }
 
     return (
-        <SafeAreaView className="bg-lightBg h-full w-full">
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-5">
-                <CustomHeader />
+        <Layout>
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                className="px-5"
+                refreshControl={
+                    <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+                }
+            >
                 <Title text="All Suppliers" />
                 <View className="mt-5">
                     {suppliers?.data?.data.map((supplier) => (
@@ -45,7 +57,7 @@ const index = () => {
                                         ({supplier.company_name})
                                     </Text>
                                 </View>
-                                <View className="mt-1">
+                                <View className="">
                                     <Text className="text-xs text-gray-600">
                                         {supplier.supplier_email}
                                     </Text>
@@ -72,8 +84,8 @@ const index = () => {
                     ))}
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </Layout>
     );
-}
+};
 
-export default index;
+export default Index;

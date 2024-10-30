@@ -4,21 +4,20 @@ import Title from '../../../components/Title'
 import FormField from '../../../components/FormField'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../../../components/CustomButton'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addsupplier } from '../../../utils/api'
-import CustomHeader from '../../../components/CustomHeader'
+import Layout from '../../../components/Layout'
 
 const Create = () => {
-
     const [error, setError] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
     const [form, setForm] = useState({
         supplier_name: "",
         supplier_email: "",
         supplier_phone: "",
         company_name: "",
-    })
+    });
+    const queryClient = useQueryClient();
 
     // Reset form fields
     const resetForm = () => setForm({
@@ -35,18 +34,15 @@ const Create = () => {
             form.supplier_phone,
             form.company_name,
         ),
-        onSuccess: async (data) => {
+        onSuccess: (data) => {
             setSuccessMessage("Supplier added successfully!");
             resetForm();
             queryClient.invalidateQueries(["suppliers"]);
         },
         onError: (error) => {
-            setError(error.message || "An error occurred while adding the supplier.")
-        },
-        onSettled: () => {
-            setIsLoading(false);
-        },
-    })
+            setError(error.message || "An error occurred while adding the supplier.");
+        }
+    });
 
     // Email validation
     const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -61,28 +57,22 @@ const Create = () => {
     };
 
     const submit = async () => {
-        setIsLoading(true);
         setError(null);
         setSuccessMessage(null);
 
         const validationError = validateForm();
         if (validationError) {
             setError(validationError);
-            setIsLoading(false);
             return;
         }
 
-        try {
-            await mutation.mutateAsync(); // Use mutateAsync for proper async handling
-        } catch (error) {
-            setError("An error occurred while adding the supplier.");
-        }
-    }
+        // Directly await mutateAsync without try-catch, as errors are handled in `onError`
+        await mutation.mutateAsync();
+    };
 
     return (
-        <SafeAreaView className="bg-lightBg h-full w-full">
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="p-5">
-                <CustomHeader />
+        <Layout>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-5 pt-2">
                 <Title text="Add Supplier" />
                 {(error || successMessage) && (
                     <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>
@@ -123,12 +113,12 @@ const Create = () => {
                         title='Add supplier'
                         handlePress={submit}
                         containerStyles="mt-4"
-                        isLoading={isLoading}
+                        isLoading={mutation.isLoading} // Use mutation's isLoading state
                     />
                 </View>
             </ScrollView>
-        </SafeAreaView>
-    )
-}
+        </Layout>
+    );
+};
 
-export default Create
+export default Create;
