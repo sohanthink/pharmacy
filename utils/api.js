@@ -64,4 +64,15 @@ export const addsupplier = async (
   }
 };
 
+// Function to fetch all suppliers
+export const fetchSuppliers = async () => {
+  try {
+    const response = await api.get("/user/medicine_company");
+    return response.data;
+  } catch (error) {
+    console.error("API error while fetching suppliers:", error);
+    throw error.response ? error.response.data : new Error("Network Error");
+  }
+};
+
 export default api;

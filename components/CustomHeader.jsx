@@ -12,9 +12,11 @@ const CustomHeader = () => {
     }
     return (
         <View className="flex-row items-center justify-between pb-5">
-            <View><MaterialIcons onPress={closeDrawer} name="view-headline" size={34} color="black" /></View>
+            <View><MaterialIcons onPress={closeDrawer} name="view-headline" size={40} color="black" /></View>
             <View className="flex-row gap-4 items-center">
-                <Text className="font-pbold"> Sohan Mollah</Text>
+                <View>
+                    {/* <Text className="font-psemibold text-lg"> Sohan Mollah</Text> */}
+                </View>
                 <Image
                     source={{ uri: "https://pharmacy.sohanthink.com/storage/profile/photo-bg-blackjpeg-1730234925.webp" }}
                     height={50} width={50} borderRadius={50} resizeMode='cover' />

@@ -38,6 +38,7 @@ const Create = () => {
         onSuccess: async (data) => {
             setSuccessMessage("Supplier added successfully!");
             resetForm();
+            queryClient.invalidateQueries(["suppliers"]);
         },
         onError: (error) => {
             setError(error.message || "An error occurred while adding the supplier.")
@@ -94,32 +95,32 @@ const Create = () => {
                         title='Full Name'
                         value={form.supplier_name}
                         handleChangeText={(e) => setForm({ ...form, supplier_name: e })}
-                        placeholder='Enter Supplier Halar Name'
+                        placeholder='Enter supplier halar name'
                     />
                     <FormField
                         styles='mt-3'
                         title='Email Address'
                         value={form.supplier_email}
                         handleChangeText={(e) => setForm({ ...form, supplier_email: e })}
-                        placeholder='Enter Supplier Halar Email'
+                        placeholder='Enter supplier halar email'
                     />
                     <FormField
                         styles='mt-3'
                         title='Phone Number'
                         value={form.supplier_phone}
                         handleChangeText={(e) => setForm({ ...form, supplier_phone: e })}
-                        placeholder='Enter Supplier Halar Phone'
+                        placeholder='Enter supplier halar phone'
                     />
                     <FormField
                         styles='mt-3'
                         title='Company Name'
                         value={form.company_name}
                         handleChangeText={(e) => setForm({ ...form, company_name: e })}
-                        placeholder='Enter Supplier Company Name'
+                        placeholder='Enter supplier company name'
                     />
 
                     <CustomButton
-                        title='Add Supplier'
+                        title='Add supplier'
                         handlePress={submit}
                         containerStyles="mt-4"
                         isLoading={isLoading}
