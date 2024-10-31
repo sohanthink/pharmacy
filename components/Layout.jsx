@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Layout = ({ children }) => {
     return (
-        <SafeAreaView className="bg-lightBg h-full w-full">
+        <SafeAreaView style={{ flex: 1 }} className="bg-lightBg h-full w-full">
             {/* Sticky Header */}
             <View className="z-10 w-full">
                 <CustomHeader />
