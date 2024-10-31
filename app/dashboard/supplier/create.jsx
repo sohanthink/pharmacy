@@ -2,7 +2,6 @@ import { View, Text, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import Title from '../../../components/Title'
 import FormField from '../../../components/FormField'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../../../components/CustomButton'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addsupplier } from '../../../utils/api'
@@ -76,7 +75,7 @@ const Create = () => {
 
     return (
         <Layout>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-5 pt-2">
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="pt-2">
 
                 <Title text="Add Supplier" />
 
@@ -85,6 +84,7 @@ const Create = () => {
                         {error || successMessage}
                     </Text>
                 )}
+
                 <View className="w-full flex-1">
                     <FormField
                         styles='mt-3'

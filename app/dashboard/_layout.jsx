@@ -33,18 +33,6 @@ const _layout = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="create"
-                    options={{
-                        drawerLabel: 'Create',
-                        title: 'Create',
-                        headerShown: false,
-                        // drawerIcon: ({ size, color }) => (
-                        //     <Ionicons name='ios-information-circle' size={size} color={color} />
-                        // )
-
-                    }}
-                />
-                <Drawer.Screen
                     name="about"
                     options={{
                         drawerLabel: 'About',
@@ -61,6 +49,18 @@ const _layout = () => {
                     options={{
                         drawerLabel: 'Supplier',
                         title: 'Supplier',
+                        headerShown: false,
+                        // drawerIcon: ({ size, color }) => (
+                        //     <Ionicons name='ios-information-circle' size={size} color={color} />
+                        // )
+
+                    }}
+                />
+                <Drawer.Screen
+                    name="medicine"
+                    options={{
+                        drawerLabel: 'Medicine',
+                        title: 'Medicine',
                         headerShown: false,
                         // drawerIcon: ({ size, color }) => (
                         //     <Ionicons name='ios-information-circle' size={size} color={color} />

@@ -11,16 +11,11 @@ const CustomHeader = () => {
         navigation.dispatch(DrawerActions.openDrawer())
     }
     return (
-        <View className="flex-row items-center justify-between px-5 py-2">
-            <View><MaterialIcons onPress={closeDrawer} name="view-headline" size={40} color="black" /></View>
-            <View className="flex-row gap-4 items-center">
-                <View>
-                    {/* <Text className="font-psemibold text-lg"> Sohan Mollah</Text> */}
-                </View>
-                <Image
-                    source={{ uri: "https://pharmacy.sohanthink.com/storage/profile/photo-bg-blackjpeg-1730234925.webp" }}
-                    height={50} width={50} borderRadius={50} resizeMode='cover' />
-            </View>
+        <View className="flex-row items-center justify-between px-4 py-2">
+            <MaterialIcons onPress={closeDrawer} name="view-headline" size={40} color="black" className="p-0" />
+            <Image
+                source={{ uri: "https://pharmacy.sohanthink.com/storage/profile/photo-bg-blackjpeg-1730234925.webp" }}
+                height={50} width={50} borderRadius={50} resizeMode='cover' />
         </View>
     )
 }

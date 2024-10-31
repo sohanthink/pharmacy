@@ -8,20 +8,19 @@ import Layout from '../../components/Layout';
 const index = () => {
     return (
         <Layout>
-            <ScrollView className="p-5">
+            <ScrollView>
                 <StatusBar style="auto" className="text-darkBg" />
 
-                {/* Header Section */}
                 <View className="mb-4">
                     <Text className="text-3xl font-extrabold text-gray-800 mb-1">Dashboard</Text>
                     <Text className="text-gray-500 text-lg">Glimpse of your system</Text>
                 </View>
 
-                {/* Cards Container */}
-                <View className="flex-row justify-between gap-1">
+
+                <View className="flex-row justify-between">
                     {/* Total Supplier Card */}
                     <TouchableOpacity
-                        className="bg-primary rounded-lg shadow-lg w-1/2 p-5"
+                        className="bg-primary rounded-lg shadow-lg w-[48%] p-5"
                         onPress={() => router.push('dashboard/supplier')} // Navigate to Supplier page
                     >
                         <View className="flex-row justify-between items-center">
@@ -35,7 +34,7 @@ const index = () => {
 
                     {/* Total Medicines Card */}
                     <TouchableOpacity
-                        className="bg-secondary rounded-lg shadow-lg w-1/2 p-5"
+                        className="bg-secondary rounded-lg shadow-lg w-[48%] p-5"
                         onPress={() => router.push('/medicines')} // Navigate to Medicines page
                     >
                         <View className="flex-row justify-between items-center">

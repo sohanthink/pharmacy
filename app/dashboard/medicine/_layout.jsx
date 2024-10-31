@@ -1,13 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
-import * as NavigationBar from 'expo-navigation-bar';
-
-NavigationBar.setBackgroundColorAsync('#161622');
+import { AntDesign, MaterialIcons } from '@expo/vector-icons'
 
 const _layout = () => {
-
     return (
         <Tabs
             screenOptions={{
@@ -18,7 +14,7 @@ const _layout = () => {
                     backgroundColor: '#161622',
                     borderTopWidth: 1,
                     borderTopColor: '#232533',
-                    height: 60,
+                    height: 80,
                     paddingVertical: 5,
                 },
             }}
@@ -26,40 +22,33 @@ const _layout = () => {
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'View',
+                    title: 'view',
                     headerShown: false,
-                    // tabBarIcon: ({ color, focused }) => (
-                    //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
-                    // ),
                     tabBarIcon: ({ size, color }) => (
                         <MaterialIcons name='view-agenda' size={size} color={color} />
                     )
                 }}
             />
             <Tabs.Screen
-                name="create"
+                name="settings"
                 options={{
-                    title: 'Create',
+                    title: 'settings',
                     headerShown: false,
-                    // tabBarIcon: ({ color, focused }) => (
-                    //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
-                    // ),
                     tabBarIcon: ({ size, color }) => (
-                        <AntDesign name="addusergroup" size={size} color={color} />
-                    )
+                        <AntDesign name="setting" size={size} color={color} />
+                    ),
                 }}
             />
-
-            {/* <Tabs.Screen
-                name="update"
+            <Tabs.Screen
+                name="create"
                 options={{
-                    title: 'Update',
+                    title: 'create',
                     headerShown: false,
-                    // tabBarIcon: ({ color, focused }) => (
-                    //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
-                    // ),
+                    tabBarIcon: ({ size, color }) => (
+                        <AntDesign name="medicinebox" size={size} color={color} />
+                    ),
                 }}
-            /> */}
+            />
         </Tabs>
     )
 }

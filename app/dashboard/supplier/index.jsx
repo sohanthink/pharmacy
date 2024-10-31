@@ -64,7 +64,6 @@ const Index = () => {
         <Layout>
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
-                className="px-5"
                 refreshControl={
                     <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
                 }
