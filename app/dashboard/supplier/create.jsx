@@ -10,6 +10,7 @@ import Layout from '../../../components/Layout'
 
 const Create = () => {
     const [error, setError] = useState(null)
+    const [isLoading, setisLoading] = useState(false)
     const [successMessage, setSuccessMessage] = useState(null);
     const [form, setForm] = useState({
         supplier_name: "",
@@ -41,8 +42,9 @@ const Create = () => {
         },
         onError: (error) => {
             setError(error.message || "An error occurred while adding the supplier.");
-        }
+        },
     });
+    console.log(mutation.isLoading);
 
     // Email validation
     const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -56,6 +58,7 @@ const Create = () => {
         return null;
     };
 
+
     const submit = async () => {
         setError(null);
         setSuccessMessage(null);
@@ -66,14 +69,17 @@ const Create = () => {
             return;
         }
 
-        // Directly await mutateAsync without try-catch, as errors are handled in `onError`
+        setisLoading(true)
         await mutation.mutateAsync();
+        setisLoading(false)
     };
 
     return (
         <Layout>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-5 pt-2">
+
                 <Title text="Add Supplier" />
+
                 {(error || successMessage) && (
                     <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>
                         {error || successMessage}
@@ -113,7 +119,7 @@ const Create = () => {
                         title='Add supplier'
                         handlePress={submit}
                         containerStyles="mt-4"
-                        isLoading={mutation.isLoading} // Use mutation's isLoading state
+                        isLoading={isLoading} // Use mutation's isLoading state
                     />
                 </View>
             </ScrollView>

@@ -1,14 +1,18 @@
 import { View, Text, ScrollView, Pressable, ActivityIndicator, RefreshControl } from 'react-native';
 import React, { useState } from 'react';
 import Title from '../../../components/Title';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useFetchSuppliers } from '../../../utils/hooks';
 import Layout from '../../../components/Layout';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteSupplier } from '../../../utils/api';
 
 const Index = () => {
     const [refreshing, setRefreshing] = useState(false);
+    const [deletingId, setDeletingId] = useState(null)
     const { data: suppliers, isLoading, error, refetch } = useFetchSuppliers();
 
+    const queryClient = useQueryClient();
     const onRefresh = async () => {
         setRefreshing(true);
         await refetch(); // Re-fetch the suppliers data
@@ -19,9 +23,30 @@ const Index = () => {
         console.log("Update supplier", id);
     };
 
-    const handleDelete = (id) => {
-        console.log("Delete supplier", id);
+    const handleDelete = async (id) => {
+        setDeletingId(id);
+        await deleteMutation.mutateAsync(id);
     };
+
+
+
+
+    // Mutation for deleting a supplier
+    const deleteMutation = useMutation({
+        mutationFn: (id) => deleteSupplier(id),
+        onSuccess: () => {
+            // Invalidate the suppliers query to refresh data
+            queryClient.invalidateQueries(["suppliers"]);
+            setDeletingId(null)
+        },
+        onError: (error) => {
+            console.error("Error deleting supplier:", error.message);
+            setDeletingId(null);
+        },
+    });
+
+
+
 
     if (isLoading) {
         return <ActivityIndicator size="large" color="#0000ff" className="flex-1 justify-center" />;
@@ -77,7 +102,13 @@ const Index = () => {
                                     onPress={() => handleDelete(supplier.id)}
                                     className="p-2 rounded-full bg-red-100 shadow"
                                 >
-                                    <MaterialIcons name="delete" size={18} color="#F44336" />
+                                    {
+                                        deletingId === supplier.id
+                                            ?
+                                            <Feather name="loader" size={24} color="black" />
+                                            :
+                                            <MaterialIcons name="delete" size={18} color="#F44336" />
+                                    }
                                 </Pressable>
                             </View>
                         </View>

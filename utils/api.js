@@ -89,4 +89,15 @@ export const fetchSuppliers = async () => {
   }
 };
 
+export const deleteSupplier = async (supplierId) => {
+  try {
+    const response = await api.delete(`user/medicine_company/${supplierId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to delete supplier."
+    );
+  }
+};
+
 export default api;
