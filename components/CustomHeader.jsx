@@ -11,7 +11,7 @@ const CustomHeader = () => {
         navigation.dispatch(DrawerActions.openDrawer())
     }
     return (
-        <View className="flex-row items-center justify-between px-4 py-2">
+        <View className="flex-row items-center justify-between p-2">
             <MaterialIcons onPress={closeDrawer} name="view-headline" size={40} color="black" className="p-0" />
             <Image
                 source={{ uri: "https://pharmacy.sohanthink.com/storage/profile/photo-bg-blackjpeg-1730234925.webp" }}

@@ -1,10 +1,10 @@
 import { View, Text, TextInput } from 'react-native'
 import React from 'react'
 
-const FormField = ({ title, value, placeholder, handleChangeText, styles, ...props }) => {
+const FormField = ({ title, value, placeholder, handleChangeText, styles, textStyles, ...props }) => {
     return (
         <View className={`${styles}`}>
-            <Text className="font-psemibold mb-2 text-black">{title}</Text>
+            <Text className={`font-psemibold mb-2 text-black ${textStyles}`}>{title}</Text>
             <TextInput
                 placeholder={placeholder}
                 placeholderTextColor='black'

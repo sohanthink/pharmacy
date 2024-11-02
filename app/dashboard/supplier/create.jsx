@@ -75,9 +75,9 @@ const Create = () => {
 
     return (
         <Layout>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="pt-2">
+            <ScrollView contentContainerStyle={{ flexGrow: 0 }} className="pt-2">
 
-                <Title text="Add Supplier" />
+                <Title text="Add Supplier" style='text-center' />
 
                 {(error || successMessage) && (
                     <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>
@@ -85,9 +85,9 @@ const Create = () => {
                     </Text>
                 )}
 
-                <View className="w-full flex-1">
+                <View className="w-full flex-1 bg-whiteBg p-5">
                     <FormField
-                        styles='mt-3'
+                        styles=''
                         title='Full Name'
                         value={form.supplier_name}
                         handleChangeText={(e) => setForm({ ...form, supplier_name: e })}

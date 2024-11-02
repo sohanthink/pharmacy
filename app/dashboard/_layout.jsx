@@ -41,7 +41,6 @@ const _layout = () => {
                         // drawerIcon: ({ size, color }) => (
                         //     <Ionicons name='ios-information-circle' size={size} color={color} />
                         // )
-
                     }}
                 />
                 <Drawer.Screen
@@ -53,7 +52,6 @@ const _layout = () => {
                         // drawerIcon: ({ size, color }) => (
                         //     <Ionicons name='ios-information-circle' size={size} color={color} />
                         // )
-
                     }}
                 />
                 <Drawer.Screen
@@ -65,7 +63,6 @@ const _layout = () => {
                         // drawerIcon: ({ size, color }) => (
                         //     <Ionicons name='ios-information-circle' size={size} color={color} />
                         // )
-
                     }}
                 />
             </Drawer>

@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
             </View>
 
             {/* Scrollable Content */}
-            <View className="flex-1 px-5">
+            <View className="flex-1 px-3">
                 {children}
             </View>
         </SafeAreaView>
