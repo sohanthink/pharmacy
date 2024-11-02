@@ -100,4 +100,28 @@ export const deleteSupplier = async (supplierId) => {
   }
 };
 
+// Function to add a medeicine categories
+export const addcategories = async (category_name) => {
+  try {
+    const response = await api.post("/user/category", {
+      category_name,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API error/while Adding medicine categories:", error);
+    throw error.response ? error.response.data : new Error("Network Error");
+  }
+};
+
+// Function to fetch all medicine categories
+export const fetchMedicineCategories = async () => {
+  try {
+    const response = await api.get("/user/category");
+    return response.data;
+  } catch (error) {
+    console.error("API error while fetching suppliers:", error);
+    throw error.response ? error.response.data : new Error("Network Error");
+  }
+};
+
 export default api;
