@@ -39,10 +39,6 @@ const CategorySection = () => {
         categoryAddMutation.mutate();
     };
 
-    if (categoryAddMutation.isPending) {
-        return <ActivityIndicator size="large" color="#0000ff" />;
-    }
-
 
     return (
         <View className="bg-whiteBg rounded-xl p-3 shadow-md">
@@ -58,7 +54,7 @@ const CategorySection = () => {
                 />
                 <CustomButton
                     handlePress={addCategories}
-                    title="Add"
+                    title={categoryAddMutation.isPending ? 'Adding...' : 'Add'}
                     containerStyles="bg-[#E0E0E0] mt-3"
                     textStyles="text-base text-darkBg"
                     isLoading={categoryAddMutation.isPending || isDisabled}

@@ -1,30 +1,45 @@
 import { View, Text } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useFetchMedicineCategories } from '../utils/hooks';
 
-const SelectPicker = () => {
+const SelectPicker = ({ selectedValue, onValueChange }) => {
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([]);
 
-    const [items, setItems] = useState([
-        { label: 'Technology', value: 'technology' },
-        { label: 'Health', value: 'health' },
-        { label: 'Finance', value: 'finance' },
-        { label: 'Education', value: 'education' },
-        { label: 'Entertainment', value: 'entertainment' },
-    ]);
+    const { data: medicineCategories, isLoading } = useFetchMedicineCategories();
+
+    useEffect(() => {
+        if (medicineCategories) {
+            const formattedItems = medicineCategories.data.data.map((category) => ({
+                label: category.category_name,
+                value: category.id,
+                name: category.category_name,
+            }));
+            setItems(formattedItems);
+        }
+    }, [medicineCategories]);
+
+    const handleSelectChange = (value) => {
+        const selectedItem = items.find((item) => item.value === value);
+        if (selectedItem) {
+            onValueChange({ id: selectedItem.value, name: selectedItem.name }); // Pass both ID and name
+        } else {
+            console.warn("Selected item not found in items list");
+        }
+    };
 
     return (
         <View style={{ zIndex: open ? 1000 : 1, marginBottom: open ? 200 : 0 }}>
-            <Text className="text-darkBg font-psemibold">Select a Category:</Text>
+            <Text className="text-darkBg font-psemibold pb-2">Select a Category</Text>
             <DropDownPicker
                 open={open}
-                value={value}
+                value={selectedValue ? selectedValue.id : null} // Controlled value
                 items={items}
                 setOpen={setOpen}
-                setValue={setValue}
+                setValue={(callback) => handleSelectChange(callback())} // Handle selection change
                 setItems={setItems}
-                placeholder="Choose a category"
+                placeholder={isLoading ? "Loading..." : "Choose a category"}
                 style={{
                     backgroundColor: 'white',
                     borderColor: '#ddd',
@@ -33,7 +48,7 @@ const SelectPicker = () => {
                     borderColor: '#ddd',
                 }}
                 textStyle={{
-                    fontSize: 16,
+                    fontSize: 15,
                 }}
                 className="border h-12 rounded-md"
             />
