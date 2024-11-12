@@ -5,7 +5,7 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useFetchSuppliers } from '../../../utils/hooks';
 import Layout from '../../../components/Layout';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteSupplier } from '../../../utils/api';
+import { deleteSupplier } from '../../../utils/api/supplierApi';
 
 const Index = () => {
     const [refreshing, setRefreshing] = useState(false);

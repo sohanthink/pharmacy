@@ -1,15 +1,17 @@
-import { View, Text, ScrollView } from 'react-native'
-import React, { useState } from 'react'
-import Title from '../../../components/Title'
-import FormField from '../../../components/FormField'
-import CustomButton from '../../../components/CustomButton'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addsupplier } from '../../../utils/api'
-import Layout from '../../../components/Layout'
+import { View, Text, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import Title from '../../../components/Title';
+import FormField from '../../../components/FormField';
+import CustomButton from '../../../components/CustomButton';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addSupplier } from '../../../utils/api/supplierApi';
+
+import Layout from '../../../components/Layout';
+import MedicineCompany from '../../../components/supplier/MedicineCompany';
+
 
 const Create = () => {
-    const [error, setError] = useState(null)
-    const [isLoading, setisLoading] = useState(false)
+    const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const [form, setForm] = useState({
         supplier_name: "",
@@ -17,6 +19,7 @@ const Create = () => {
         supplier_phone: "",
         company_name: "",
     });
+
     const queryClient = useQueryClient();
 
     // Reset form fields
@@ -27,6 +30,7 @@ const Create = () => {
         company_name: "",
     });
 
+    // Mutation for adding a supplier
     const mutation = useMutation({
         mutationFn: () => addsupplier(
             form.supplier_name,
@@ -34,7 +38,7 @@ const Create = () => {
             form.supplier_phone,
             form.company_name,
         ),
-        onSuccess: (data) => {
+        onSuccess: () => {
             setSuccessMessage("Supplier added successfully!");
             resetForm();
             queryClient.invalidateQueries(["suppliers"]);
@@ -43,11 +47,11 @@ const Create = () => {
             setError(error.message || "An error occurred while adding the supplier.");
         },
     });
-    console.log(mutation.isLoading);
 
-    // Email validation
+    // Email validation function
     const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 
+    // Form validation function
     const validateForm = () => {
         if (!form.supplier_name) return "Please provide the supplier name.";
         if (!form.supplier_email || !validateEmail(form.supplier_email)) return "Please enter a valid Supplier Email.";
@@ -57,7 +61,7 @@ const Create = () => {
         return null;
     };
 
-
+    // Form submission handler
     const submit = async () => {
         setError(null);
         setSuccessMessage(null);
@@ -67,59 +71,63 @@ const Create = () => {
             setError(validationError);
             return;
         }
-
-        setisLoading(true)
         await mutation.mutateAsync();
-        setisLoading(false)
     };
+
+
 
     return (
         <Layout>
             <ScrollView contentContainerStyle={{ flexGrow: 0 }} className="pt-2">
+                <Title text="Add Company & Supplier" style="text-center text-2xl" />
 
-                <Title text="Add Supplier" style='text-center' />
-
+                {/* Display error or success message */}
                 {(error || successMessage) && (
                     <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>
                         {error || successMessage}
                     </Text>
                 )}
 
+                {/* Add Medicine Company */}
+                <MedicineCompany />
+
+                {/* Add supplier  */}
                 <View className="w-full flex-1 bg-whiteBg p-5">
+                    {/* Form fields */}
                     <FormField
-                        styles=''
-                        title='Full Name'
+                        title="Full Name"
                         value={form.supplier_name}
                         handleChangeText={(e) => setForm({ ...form, supplier_name: e })}
-                        placeholder='Enter supplier halar name'
+                        placeholder="Enter supplier name"
                     />
                     <FormField
-                        styles='mt-3'
-                        title='Email Address'
+                        styles="mt-3"
+                        title="Email Address"
                         value={form.supplier_email}
                         handleChangeText={(e) => setForm({ ...form, supplier_email: e })}
-                        placeholder='Enter supplier halar email'
+                        placeholder="Enter supplier email"
                     />
                     <FormField
-                        styles='mt-3'
-                        title='Phone Number'
+                        styles="mt-3"
+                        title="Phone Number"
                         value={form.supplier_phone}
                         handleChangeText={(e) => setForm({ ...form, supplier_phone: e })}
-                        placeholder='Enter supplier halar phone'
+                        placeholder="Enter supplier phone"
                     />
                     <FormField
-                        styles='mt-3'
-                        title='Company Name'
+                        styles="mt-3"
+                        title="Company Name"
                         value={form.company_name}
                         handleChangeText={(e) => setForm({ ...form, company_name: e })}
-                        placeholder='Enter supplier company name'
+                        placeholder="Enter company name"
                     />
 
+                    {/* Submit button */}
                     <CustomButton
-                        title='Add supplier'
+                        title="Add Supplier"
                         handlePress={submit}
                         containerStyles="mt-4"
-                        isLoading={isLoading} // Use mutation's isLoading state
+                        isLoading={mutation.isPending} // Use mutation's isLoading state
                     />
                 </View>
             </ScrollView>

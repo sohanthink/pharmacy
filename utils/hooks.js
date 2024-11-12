@@ -1,25 +1,58 @@
+// hooks.js
 import { useQuery } from "@tanstack/react-query";
-import { fetchMedicineCategories, fetchSuppliers } from "./api";
+import { fetchSuppliers } from "./api/supplierApi";
+import { fetchCategories } from "./api/categoryApi";
+import { fetchLeafSettings } from "./api/leafApi";
+import { fetchMedicineCategories } from "./api/categoryApi";
+import { fetchMedicineCompanies } from "./api/companyNameApi";
+
+const queryConfig = {
+  staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  onError: (error) => {
+    console.error("Query error:", error);
+  },
+};
 
 export const useFetchSuppliers = () => {
   return useQuery({
+    ...queryConfig,
     queryKey: ["suppliers"],
     queryFn: fetchSuppliers,
-    staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
-    onError: (error) => {
-      console.error("Failed to fetch suppliers:", error);
-    },
   });
 };
 
 // fetch medicine categories
 export const useFetchMedicineCategories = () => {
   return useQuery({
+    ...queryConfig,
     queryKey: ["medicineCategories"],
     queryFn: fetchMedicineCategories,
-    staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
     onError: (error) => {
       console.error("Failed to fetch suppliers:", error);
     },
+  });
+};
+
+// export const useFetchCategories = () => {
+//   return useQuery({
+//     ...queryConfig,
+//     queryKey: ["categories"],
+//     queryFn: fetchCategories,
+//   });
+// };
+
+export const useFetchLeafSettings = () => {
+  return useQuery({
+    ...queryConfig,
+    queryKey: ["leafSettings"],
+    queryFn: fetchLeafSettings,
+  });
+};
+
+export const useFetchCompanyNames = () => {
+  return useQuery({
+    ...queryConfig,
+    queryKey: ["fetchCompanyNames"],
+    queryFn: fetchMedicineCompanies,
   });
 };

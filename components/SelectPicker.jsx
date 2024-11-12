@@ -23,7 +23,7 @@ const SelectPicker = ({ selectedValue, onValueChange }) => {
     const handleSelectChange = (value) => {
         const selectedItem = items.find((item) => item.value === value);
         if (selectedItem) {
-            onValueChange({ id: selectedItem.value, name: selectedItem.name }); // Pass both ID and name
+            onValueChange({ id: selectedItem.value, name: selectedItem.name }); // Pass selected item (id & name)
         } else {
             console.warn("Selected item not found in items list");
         }
@@ -34,7 +34,7 @@ const SelectPicker = ({ selectedValue, onValueChange }) => {
             <Text className="text-darkBg font-psemibold pb-2">Select a Category</Text>
             <DropDownPicker
                 open={open}
-                value={selectedValue ? selectedValue.id : null} // Controlled value
+                value={selectedValue?.id} // Use the ID as the controlled value
                 items={items}
                 setOpen={setOpen}
                 setValue={(callback) => handleSelectChange(callback())} // Handle selection change
@@ -46,7 +46,9 @@ const SelectPicker = ({ selectedValue, onValueChange }) => {
                 }}
                 dropDownContainerStyle={{
                     borderColor: '#ddd',
+                    maxHeight: 200,
                 }}
+                listMode='SCROLLVIEW'
                 textStyle={{
                     fontSize: 15,
                 }}

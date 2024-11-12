@@ -1,7 +1,7 @@
 import { View, Text, Alert, TextInput, ActivityIndicator, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { router } from "expo-router";
-import { Login } from "../utils/api";
+import { Login } from "../utils/api/authApi";
 import { useMutation } from '@tanstack/react-query';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
