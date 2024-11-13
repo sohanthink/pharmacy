@@ -22,7 +22,6 @@ const LeafSetting = () => {
 
     const { data: leafSettings, isLoading, refetch } = useFetchLeafSettings();
     const maindata = leafSettings?.data?.data
-    console.log('fetchLeafSettings', maindata);
 
 
     const handleCategoryChange = (value) => {

@@ -7,7 +7,8 @@ import { fetchMedicineCategories } from "./api/categoryApi";
 import { fetchMedicineCompanies } from "./api/companyNameApi";
 
 const queryConfig = {
-  staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  staleTime: 15 * 60 * 1000, // Data is fresh for 15 minutes
+  cacheTime: 30 * 60 * 1000, // Cached in memory for 30 minutes
   onError: (error) => {
     console.error("Query error:", error);
   },

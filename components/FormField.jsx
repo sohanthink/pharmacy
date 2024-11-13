@@ -8,7 +8,7 @@ const FormField = ({ title, value, placeholder, handleChangeText, styles, textSt
             <TextInput
                 placeholder={placeholder}
                 placeholderTextColor='rgba(0, 0, 0, 0.2)'
-                className='bg-slate-100 text-black px-3 py-4 rounded-md font-plight border-[0.3px]'
+                className='bg-slate-100 text-black px-3 py-3 rounded-md font-plight border-[0.3px]'
                 value={value}
                 onChangeText={handleChangeText}
                 editable={!disabled}

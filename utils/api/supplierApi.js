@@ -6,18 +6,18 @@ export const addSupplier = async (
   supplier_name,
   supplier_email,
   supplier_phone,
-  company_name
+  medicine_company_id
 ) => {
   try {
-    const response = await api.post("/user/medicine_company", {
+    const response = await api.post("/user/supplier", {
       supplier_name,
       supplier_email,
       supplier_phone,
-      company_name,
+      medicine_company_id,
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data || "Network Error");
+    throw new Error(error?.response?.data?.message || "Network Error");
   }
 };
 

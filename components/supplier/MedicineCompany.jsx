@@ -2,20 +2,17 @@ import { View, Text, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import FormField from '../FormField';
 import CustomButton from '../CustomButton';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addMedicineCompany } from '../../utils/api/companyNameApi';
-import { useFetchCompanyNames } from '../../utils/hooks';
 
-const MedicineCompany = () => {
+const MedicineCompany = ({ companyNames, isLoading }) => {
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const [form, setForm] = useState({ company_name: '' });
 
     const queryClient = useQueryClient();
 
-    // Fetch existing company names
-    const { data: fetchCompanyNames, isLoading, refetch } = useFetchCompanyNames();
-    const companyNames = fetchCompanyNames?.data?.data || [];
 
     // Mutation for adding a new company
     const companyNameAddMutation = useMutation({
