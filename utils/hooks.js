@@ -14,6 +14,7 @@ const queryConfig = {
   },
 };
 
+// fetch all suppliers
 export const useFetchSuppliers = () => {
   return useQuery({
     ...queryConfig,

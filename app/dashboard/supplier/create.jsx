@@ -18,7 +18,7 @@ const Create = () => {
     return (
         <Layout>
             <ScrollView contentContainerStyle={{ flexGrow: 0 }} className="pt-2">
-                <Title text="Add Company & Supplier" style="text-center text-2xl" />
+                <Title text="Company & Supplier" style="text-center text-2xl" />
 
                 {/* Add Medicine Company */}
                 <MedicineCompany

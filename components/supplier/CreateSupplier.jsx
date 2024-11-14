@@ -135,7 +135,7 @@ const CreateSupplier = ({ companyNames, isLoading }) => {
                 title="Add Supplier"
                 handlePress={submit}
                 containerStyles="mt-4"
-                isLoading={AddSupplierMutation.isLoading}
+                isLoading={AddSupplierMutation.isPending || isLoading}
             />
         </View>
     );

@@ -24,7 +24,7 @@ export const addSupplier = async (
 // Fetch all suppliers
 export const fetchSuppliers = async () => {
   try {
-    const response = await api.get("/user/medicine_company");
+    const response = await api.get("/user/supplier");
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data || "Network Error");
