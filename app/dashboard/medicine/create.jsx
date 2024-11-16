@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import Layout from '../../../components/Layout';
 import FormField from '../../../components/FormField';
 import CustomButton from '../../../components/CustomButton';
 import Title from '../../../components/Title';
 import DropDownPicker from 'react-native-dropdown-picker';
-
 import { useFetchMedicineCategories, useFetchLeafSettings, useFetchCompanyNames } from '../../../utils/hooks';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useMutation } from '@tanstack/react-query';
+import { addMedicine } from '../../../utils/api/medicineApi';
 
 const MedicineCreate = () => {
     const [form, setForm] = useState({
@@ -20,15 +21,30 @@ const MedicineCreate = () => {
         supplier_price: '',
         box_mrp: ''
     });
-    console.log(form);
 
     const [categoryOpen, setCategoryOpen] = useState(false);
     const [leafSettingOpen, setLeafSettingOpen] = useState(false);
     const [companyOpen, setCompanyOpen] = useState(false);
 
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const { data: medicineCategories, isLoading: isCategoriesLoading } = useFetchMedicineCategories();
     const { data: leafSettings, isLoading: isLeafSettingsLoading } = useFetchLeafSettings();
     const { data: fetchCompanyNames, isLoading: isCompaniesLoading } = useFetchCompanyNames();
+
+    const resetForm = () => {
+        setForm({
+            category_id: '',
+            leaf_setting_id: '',
+            medicine_company_id: '',
+            medicine_name: '',
+            shelf_id: '',
+            medicine_details: '',
+            supplier_price: '',
+            box_mrp: ''
+        });
+    };
 
     const handleInputChange = (name, value) => {
         setForm((prevForm) => ({
@@ -38,115 +54,146 @@ const MedicineCreate = () => {
     };
 
     const validateForm = () => {
-        const newErrors = {};
-        if (!form.category_id) newErrors.category_id = "Category is required.";
-        if (!form.leaf_setting_id) newErrors.leaf_setting_id = "Leaf setting is required.";
-        if (!form.medicine_company_id) newErrors.medicine_company_id = "Company is required.";
-        if (!form.medicine_name) newErrors.medicine_name = "Medicine name is required.";
-        if (!form.shelf_id) newErrors.shelf_id = "Shelf ID is required.";
-        if (!form.supplier_price) newErrors.supplier_price = "Supplier price is required.";
-        if (!form.box_mrp) newErrors.box_mrp = "Box MRP is required.";
-        return newErrors;
+        const errors = {};
+        if (!form.category_id) errors.category_id = "Category is required.";
+        if (!form.leaf_setting_id) errors.leaf_setting_id = "Leaf setting is required.";
+        if (!form.medicine_company_id) errors.medicine_company_id = "Company is required.";
+        if (!form.medicine_name) errors.medicine_name = "Medicine name is required.";
+        // if (!form.shelf_id) errors.shelf_id = "Shelf ID is required.";
+        if (!form.supplier_price) errors.supplier_price = "Supplier price is required.";
+        if (!form.box_mrp) errors.box_mrp = "Box MRP is required.";
+        return errors;
     };
 
-    const handleSubmit = () => {
+    const AddMedicineMutation = useMutation({
+        mutationFn: () => addMedicine(
+            form.category_id,
+            form.leaf_setting_id,
+            form.medicine_company_id,
+            form.medicine_name,
+            form.shelf_id,
+            form.medicine_details,
+            form.supplier_price,
+            form.box_mrp
+        ),
+        onSuccess: () => {
+            setSuccessMessage("Medicine added successfully!");
+            resetForm();
+            // Hide success message after 3 seconds
+            setTimeout(() => setSuccessMessage(null), 3000);
+        },
+        onError: (error) => {
+            console.log('error hoiche', error.message);
+            setErrorMessage(error?.message || "An error occurred while adding the medicine.");
+            // Hide error message after 3 seconds
+            setTimeout(() => setErrorMessage(null), 3000);
+        }
+    });
 
-        console.log("Submitting Form Data:", form);
-        // Add logic here to send the form data to your API
+    const handleSubmit = () => {
+        const errors = validateForm();
+        if (Object.keys(errors).length > 0) {
+            Alert.alert("Please add the values", Object.values(errors).join("\n"));
+            return;
+        }
+        AddMedicineMutation.mutate();
+    };
+
+    const sharedDropDownProps = {
+        listMode: "FLATLIST",
+        placeholder: "Select an option",
+        scrollViewProps: { nestedScrollEnabled: true },
+        flatListProps: { nestedScrollEnabled: true },
+        zIndexInverse: 1000,
     };
 
     return (
         <Layout>
             <Title text="Add New Medicine" style="my-2 text-center" />
             <View className='p-1'>
+                {/* Success and Error Messages */}
+                {successMessage && (
+                    <View className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                        <Text className="font-bold">{successMessage}</Text>
+                    </View>
+                )}
+
+                {errorMessage && (
+                    <View className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        <Text className="font-bold">{errorMessage}</Text>
+                    </View>
+                )}
                 <KeyboardAwareScrollView
                     contentContainerStyle={{ flexGrow: 1 }}
-                    extraHeight={150} // Ensures enough space when the keyboard is open
-                    enableOnAndroid={true} // Helps manage Android keyboard behavior
+                    extraHeight={150}
+                    enableOnAndroid={true}
                     nestedScrollEnabled={true}
                     className="bg-white rounded-xl p-4 shadow-md"
                 >
-
                     {/* Medicine Category Dropdown */}
                     <View style={{ flexShrink: 1 }} className='z-[3000]'>
-                        <Text className='py-2 font-pbold'>Choose a category</Text>
+                        <Text className='py-2 font-pbold'>Choose a Category</Text>
                         <DropDownPicker
+                            className='bg-slate-100 border-[0.3px]'
+                            {...sharedDropDownProps}
                             open={categoryOpen}
                             setOpen={setCategoryOpen}
                             value={form.category_id}
                             setValue={(callback) => {
                                 const newValue = callback(form.category_id);
-                                setForm((prev) => ({ ...prev, category_id: newValue }));
+                                handleInputChange('category_id', newValue);
                             }}
                             items={medicineCategories?.data?.data.map(category => ({
                                 label: category.category_name,
                                 value: category.id,
                             })) || []}
-                            placeholder="Select Category"
                             loading={isCategoriesLoading}
-                            listMode="FLATLIST"
-                            flatListProps={{
-                                keyExtractor: (item) => item.value.toString(),
-                                nestedScrollEnabled: true,
-                            }}
-                            scrollViewProps={{ nestedScrollEnabled: true }}
-                            zIndex={3000} zIndexInverse={1000}
                         />
                     </View>
 
                     {/* Leaf Setting Dropdown */}
                     <View className='z-[2000]'>
-                        <Text className='py-2 font-pbold'>Choose a Leaf</Text>
+                        <Text className='py-2 font-pbold'>Choose a Leaf Setting</Text>
                         <DropDownPicker
+                            className='bg-slate-100 border-[0.3px]'
+                            {...sharedDropDownProps}
                             open={leafSettingOpen}
                             setOpen={setLeafSettingOpen}
+                            value={form.leaf_setting_id}
+                            setValue={(callback) => {
+                                const newValue = callback(form.leaf_setting_id);
+                                handleInputChange('leaf_setting_id', newValue);
+                            }}
                             items={leafSettings?.data?.data.map(setting => ({
                                 label: setting.total_number,
                                 value: setting.id,
                             })) || []}
-                            value={form.leaf_setting_id}
-                            setValue={(callback) => {
-                                const newValue = callback(form.leaf_setting_id);
-                                setForm((prev) => ({ ...prev, leaf_setting_id: newValue }));
-                            }}
-                            // setValue={(value) => handleInputChange('leaf_setting_id', value)}
-                            placeholder="Select Leaf Setting"
                             loading={isLeafSettingsLoading}
-                            flatListProps={{
-                                nestedScrollEnabled: true,
-                            }}
-                            scrollViewProps={{ nestedScrollEnabled: true }}
-                            zIndex={2000} zIndexInverse={2000}
                         />
                     </View>
 
                     {/* Medicine Company Dropdown */}
                     <View className='z-[1000]'>
-                        <Text className='py-2 font-pbold'>Choose a Medicine company</Text>
+                        <Text className='py-2 font-pbold'>Choose a Medicine Company</Text>
                         <DropDownPicker
+                            className='bg-slate-100 border-[0.3px]'
+                            {...sharedDropDownProps}
                             open={companyOpen}
                             setOpen={setCompanyOpen}
+                            value={form.medicine_company_id}
+                            setValue={(callback) => {
+                                const newValue = callback(form.medicine_company_id);
+                                handleInputChange('medicine_company_id', newValue);
+                            }}
                             items={fetchCompanyNames?.data?.data.map(company => ({
                                 label: company.company_name,
                                 value: company.id,
                             })) || []}
-                            value={form.medicine_company_id}
-                            setValue={(callback) => {
-                                const newValue = callback(form.medicine_company_id);
-                                setForm((prev) => ({ ...prev, medicine_company_id: newValue }));
-                            }}
-                            // setValue={(value) => handleInputChange('medicine_company_id', value)}
-                            placeholder="Select Medicine Company"
                             loading={isCompaniesLoading}
-                            flatListProps={{
-                                nestedScrollEnabled: true,
-                            }}
-                            scrollViewProps={{ nestedScrollEnabled: true }}
-                            zIndex={1000} zIndexInverse={3000}
                         />
                     </View>
 
-                    {/* Text Fields */}
+                    {/* Form Fields */}
                     <FormField
                         title="Medicine Name"
                         placeholder="Enter medicine name"
@@ -189,13 +236,13 @@ const MedicineCreate = () => {
                     <CustomButton
                         title="Add Medicine"
                         handlePress={handleSubmit}
-                        containerStyles="bg-[#4CAF50] mt-5 mb-20"
+                        containerStyles="bg-[#4CAF50] mt-5 mb-40"
                         textStyles="text-white"
+                        isLoading={AddMedicineMutation.isPending}
                     />
                 </KeyboardAwareScrollView>
-            </View >
-
-        </Layout >
+            </View>
+        </Layout>
     );
 };
 

@@ -5,6 +5,7 @@ import { fetchCategories } from "./api/categoryApi";
 import { fetchLeafSettings } from "./api/leafApi";
 import { fetchMedicineCategories } from "./api/categoryApi";
 import { fetchMedicineCompanies } from "./api/companyNameApi";
+import { fetchMedicines } from "./api/medicineApi";
 
 const queryConfig = {
   staleTime: 15 * 60 * 1000, // Data is fresh for 15 minutes
@@ -56,5 +57,13 @@ export const useFetchCompanyNames = () => {
     ...queryConfig,
     queryKey: ["fetchCompanyNames"],
     queryFn: fetchMedicineCompanies,
+  });
+};
+
+export const useFetchMedicines = () => {
+  return useQuery({
+    ...queryConfig,
+    queryKey: ["fetchMedicines"],
+    queryFn: fetchMedicines,
   });
 };
