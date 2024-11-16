@@ -46,11 +46,6 @@ const CreateSupplier = ({ companyNames, isLoading }) => {
         return null;
     };
 
-    const handleSelectCompany = (value) => {
-        setSelectedCompany(value);
-        setForm({ ...form, medicine_company_id: value });
-    };
-
     const AddSupplierMutation = useMutation({
         mutationFn: () => addSupplier(
             form.supplier_name,

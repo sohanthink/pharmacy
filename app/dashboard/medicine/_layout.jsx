@@ -30,22 +30,22 @@ const _layout = () => {
                 }}
             />
             <Tabs.Screen
-                name="settings"
-                options={{
-                    title: 'settings',
-                    headerShown: false,
-                    tabBarIcon: ({ size, color }) => (
-                        <AntDesign name="setting" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
                 name="create"
                 options={{
                     title: 'create',
                     headerShown: false,
                     tabBarIcon: ({ size, color }) => (
                         <AntDesign name="medicinebox" size={size} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="settings"
+                options={{
+                    title: 'settings',
+                    headerShown: false,
+                    tabBarIcon: ({ size, color }) => (
+                        <AntDesign name="setting" size={size} color={color} />
                     ),
                 }}
             />

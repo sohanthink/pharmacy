@@ -7,12 +7,6 @@ import { addLeafSetting } from '../../utils/api/leafApi';
 import { useMutation } from '@tanstack/react-query';
 import { useFetchLeafSettings } from '../../utils/hooks';
 
-const leafData = [
-    { id: 1, category_name: 'Leaf 1' },
-    { id: 2, category_name: 'Leaf 2' },
-    { id: 3, category_name: 'Leaf 3' },
-];
-
 const LeafSetting = () => {
     const [selectedCategory, setSelectedCategory] = useState(null); // Stores the selected category object
     const [leafSetting, setLeafSetting] = useState(''); // Stores the leaf description
@@ -61,7 +55,7 @@ const LeafSetting = () => {
     });
 
     return (
-        <View className="bg-whiteBg shadow-md rounded-xl p-3 mt-5">
+        <View className="bg-white shadow-md rounded-xl p-3 mt-5">
             {successMessage && <Text className="text-green-500 text-sm text-center font-pmedium py-2">{successMessage}</Text>}
             {error && <Text className="text-red-500 py-2 text-sm text-center font-pmedium">{error}</Text>}
             <View className="pb-5">

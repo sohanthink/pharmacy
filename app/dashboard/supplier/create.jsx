@@ -26,8 +26,6 @@ const Create = () => {
                     isLoading={isLoading}
                 />
 
-
-
                 {/* Add supplier  */}
                 <CreateSupplier
                     companyNames={companyNames}

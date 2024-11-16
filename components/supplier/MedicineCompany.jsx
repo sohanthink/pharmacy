@@ -40,7 +40,7 @@ const MedicineCompany = ({ companyNames, isLoading }) => {
     };
 
     return (
-        <View className="bg-whiteBg p-5 mb-5">
+        <View className="bg-white p-5 mb-5">
             {/* Display error or success message */}
             {(error || successMessage) && (
                 <Text className={`py-4 text-center font-semibold ${error ? 'text-red-500' : 'text-secondary'}`}>

@@ -43,7 +43,7 @@ const CategorySection = () => {
     };
 
     return (
-        <View className="bg-whiteBg rounded-xl p-3 shadow-md">
+        <View className="bg-white rounded-xl p-3 shadow-md">
             {successMessage && <Text style={{ color: 'green' }}>{successMessage}</Text>}
             {error && <Text style={{ color: 'red' }}>{error}</Text>}
             <View className="py-5">

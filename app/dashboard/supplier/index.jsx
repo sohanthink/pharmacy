@@ -44,14 +44,14 @@ const Index = () => {
         },
     });
 
-    if (isSuppliersLoading) {
+    if (isSuppliersLoading || isCompanyNamesLoading) {
         return <ActivityIndicator size="large" color="#0000ff" className="flex-1 justify-center" />;
     }
 
-    if (suppliersError) {
+    if (suppliersError || companyNamesError) {
         return (
             <View className="flex-1 justify-center items-center">
-                <Text className="text-red-500">Failed to load suppliers.</Text>
+                <Text className="text-red-500">Failed to load suppliers & Company names.</Text>
             </View>
         );
     }
