@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, Pressable, ActivityIndicator, RefreshControl, Linking, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import Title from '../../../components/Title';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
@@ -58,54 +58,42 @@ const Index = () => {
 
     return (
         <Layout>
+            <Title text="All Suppliers" />
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 refreshControl={
                     <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
                 }
             >
-                <Title text="All Suppliers" />
-                <View className="mt-5">
+
+                <View className="flex flex-row flex-wrap justify-between mt-5">
                     {suppliers?.data?.data.map((supplier) => {
                         // Find the matching company name based on supplier's medicine_company_id
                         const company = companies.find((c) => c.id === supplier.medicine_company_id);
-
                         return (
-                            <View key={supplier.id} className="bg-white rounded-lg p-4 mb-4 shadow-md flex-row justify-between items-center">
-                                <View className="flex-1">
-                                    <View className="flex-row items-center gap-3">
-                                        <Text className="text-lg font-bold text-gray-800">
-                                            {supplier.supplier_name}
-                                        </Text>
-                                        <Text className="text-sm text-gray-600">
-                                            {company ? `(${company.company_name})` : ""}
-                                        </Text>
-                                    </View>
-                                    <View>
-                                        <Text className="text-xs text-gray-600">
-                                            {supplier.supplier_email}
-                                        </Text>
-                                        <Text className="text-xs text-gray-500">
-                                            {supplier.supplier_phone}
-                                        </Text>
-                                    </View>
-                                </View>
-                                <View className="flex-row space-x-2">
-                                    <Pressable
-                                        onPress={() => handleDelete(supplier.id)}
-                                        className="p-2 rounded-full bg-red-100 shadow"
-                                    >
-                                        {deletingId === supplier.id ? (
-                                            <ActivityIndicator size="small" color="black" />
-                                        ) : (
-                                            <MaterialIcons name="delete" size={18} color="#F44336" />
-                                        )}
-                                    </Pressable>
+                            <View
+                                key={supplier.id}
+                                className="bg-white rounded-lg p-3 mb-2 shadow-md w-[49%]"
+                            >
+                                <View className='space-y-2'>
+                                    <Text className="text-xs font-psemibold text-gray-800">
+                                        {supplier.supplier_name}
+                                    </Text>
+                                    <Text className="text-sm font-pbold text-secondary">
+                                        {company ? `(${company.company_name})` : ""}
+                                    </Text>
+                                    <Text className="text-[10px] text-gray-600">
+                                        {supplier.supplier_email}
+                                    </Text>
+                                    <TouchableOpacity onPress={() => Linking.openURL(`tel:${supplier.supplier_phone}`)}>
+                                        <Text className="text-xs text-gray-500">{supplier.supplier_phone}</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         );
                     })}
                 </View>
+
             </ScrollView>
         </Layout>
     );

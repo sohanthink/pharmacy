@@ -131,7 +131,7 @@ const MedicineCreate = () => {
                     className="bg-white rounded-xl p-4 shadow-md"
                 >
                     {/* Medicine Category Dropdown */}
-                    <View style={{ flexShrink: 1 }} className='z-[3000]'>
+                    <View style={{ flexShrink: 1 }} className='z-[6000]'>
                         <Text className='py-2 font-pbold'>Choose a Category</Text>
                         <DropDownPicker
                             className='bg-slate-100 border-[0.3px]'
@@ -152,7 +152,7 @@ const MedicineCreate = () => {
                     </View>
 
                     {/* Leaf Setting Dropdown */}
-                    <View className='z-[2000]'>
+                    {/* <View className='z-[2000]'>
                         <Text className='py-2 font-pbold'>Choose a Leaf Setting</Text>
                         <DropDownPicker
                             className='bg-slate-100 border-[0.3px]'
@@ -167,6 +167,27 @@ const MedicineCreate = () => {
                             items={leafSettings?.data?.data.map(setting => ({
                                 label: setting.total_number,
                                 value: setting.id,
+                            })) || []}
+                            loading={isLeafSettingsLoading}
+                        />
+                    </View> */}
+
+                    {/* Leaf Setting Dropdown */}
+                    <View>
+                        <Text className='py-2 font-pbold'>Choose a Leaf</Text>
+                        <DropDownPicker
+                            className='bg-slate-100 border-[0.3px]'
+                            {...sharedDropDownProps}
+                            open={leafSettingOpen}
+                            setOpen={setLeafSettingOpen}
+                            value={form.leaf_setting_id}
+                            setValue={(callback) => {
+                                const newValue = callback(form.leaf_setting_id);
+                                handleInputChange('leaf_setting_id', newValue);
+                            }}
+                            items={leafSettings?.data?.data.map(setting => ({
+                                label: `${setting.leaf_type} has ${setting.total_number} medicines`, // Display text
+                                value: setting.id, // Send id as value
                             })) || []}
                             loading={isLeafSettingsLoading}
                         />
@@ -201,13 +222,13 @@ const MedicineCreate = () => {
                         onChangeText={(value) => handleInputChange('medicine_name', value)}
                         styles='pt-2'
                     />
-                    <FormField
+                    {/* <FormField
                         title="Shelf ID"
                         placeholder="Enter shelf ID"
                         value={form.shelf_id}
                         onChangeText={(value) => handleInputChange('shelf_id', value)}
                         styles='pt-2'
-                    />
+                    /> */}
                     <FormField
                         title="Medicine Details"
                         placeholder="Enter details about the medicine"
@@ -236,7 +257,7 @@ const MedicineCreate = () => {
                     <CustomButton
                         title="Add Medicine"
                         handlePress={handleSubmit}
-                        containerStyles="bg-[#4CAF50] mt-5 mb-40"
+                        containerStyles="bg-[#4CAF50] mt-5 mb-10"
                         textStyles="text-white"
                         isLoading={AddMedicineMutation.isPending}
                     />

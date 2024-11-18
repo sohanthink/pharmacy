@@ -68,7 +68,7 @@ const MedicineCompany = ({ companyNames, isLoading }) => {
                     <View className="flex-row gap-3 py-3">
                         {companyNames.length > 0 ? (
                             companyNames.map((item) => (
-                                <Text key={item.id} className="font-pbold p-3 bg-slate-500 text-white rounded-md">
+                                <Text key={item.id} className="font-pbold p-3 bg-tertiary text-darkBg rounded-md">
                                     {item.company_name}
                                 </Text>
                             ))

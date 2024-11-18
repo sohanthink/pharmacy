@@ -67,7 +67,7 @@ const CategorySection = () => {
                     <ActivityIndicator size="large" color="#0000ff" />
                 ) : (
                     medicineCategories?.data?.data.map((item) => (
-                        <View key={item.id} className="bg-secondary mr-2 rounded-3xl flex-row gap-x-2 mx-1 justify-center items-center p-3">
+                        <View key={item.id} className="bg-secondary mr-2 rounded-3xl flex-row mx-1 justify-center items-center p-3">
                             <Text className="font-pbold text-md text-lightBg">
                                 {item.category_name}
                             </Text>

@@ -13,7 +13,7 @@ const _layout = () => {
                     // drawerLabelStyle: {
                     //     // marginLeft: -20
                     // },
-                    drawerActiveBackgroundColor: 'red',
+                    drawerActiveBackgroundColor: 'green',
                     drawerActiveTintColor: 'white',
                     drawerInactiveTintColor: 'black',
                 }}

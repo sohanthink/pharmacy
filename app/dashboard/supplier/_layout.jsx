@@ -20,7 +20,8 @@ const _layout = () => {
                     backgroundColor: '#161622',
                     borderTopWidth: 1,
                     borderTopColor: '#232533',
-                    height: 60,
+                    height: 80,
+                    paddingTop: 10,
                     paddingVertical: 5,
                 },
             }}
