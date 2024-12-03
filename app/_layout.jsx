@@ -17,7 +17,7 @@ const useLoadFonts = () => {
     });
 
     return fontsLoaded;
-}
+};
 
 const LoadingScreen = () => (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -31,23 +31,31 @@ export default function RootLayout() {
     const fontsLoaded = useLoadFonts();
     const queryClient = new QueryClient();
 
-
     useEffect(() => {
         const prepareApp = async () => {
             try {
+                // Prevent splash screen from auto-hiding
+                await SplashScreen.preventAutoHideAsync();
+
                 if (fontsLoaded) {
-                    await SplashScreen.hideAsync();
                     setAppIsReady(true);
                 }
             } catch (e) {
                 console.error("Error preparing app:", e);
             }
         };
+
         prepareApp();
     }, [fontsLoaded]);
 
+    useEffect(() => {
+        if (appIsReady) {
+            SplashScreen.hideAsync(); // Hide splash screen when app is ready
+        }
+    }, [appIsReady]);
+
     if (!appIsReady) {
-        return <LoadingScreen />;
+        return null; // Splash screen is still visible
     }
 
     return (

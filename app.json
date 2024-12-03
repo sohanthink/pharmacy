@@ -5,20 +5,24 @@
     "scheme": "pharmacy",
     "version": "1.0.0",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/pharmacy.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "extra": {
       "eas": {
         "projectId": "51253b98-3358-47ed-aac6-d120c46e540b"
       }
     },
-    "plugins": [
-      "expo-font",
-      "expo-router"
-    ],
+    "plugins": ["expo-font", "expo-router"],
     "android": {
-      "package": "com.sohanthink.pharmacy"
+      "package": "com.sohanthink.pharmacy",
+      "versionCode": 8
     },
     "ios": {
-      "bundleIdentifier": "com.sohanthink.pharmacy"
+      "bundleIdentifier": "com.sohanthink.pharmacy",
+      "buildNumber": "1.0.0"
     }
   }
 }
