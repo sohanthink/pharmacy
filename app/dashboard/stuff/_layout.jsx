@@ -1,33 +1,36 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const _layout = () => {
     return (
         <Tabs
             screenOptions={{
-                tabBarShowLabel: false,
+                tabBarShowLabel: true,
                 tabBarActiveTintColor: '#FFA001',
                 tabBarInactiveTintColor: '#CDCDE0',
                 tabBarStyle: {
                     backgroundColor: '#161622',
                     borderTopWidth: 1,
                     borderTopColor: '#232533',
-                    height: 84,
+                    height: 80,
+                    paddingTop: 10,
+                    paddingVertical: 5,
                 },
             }}
         >
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'About',
+                    title: 'Stuff',
                     headerShown: false,
-                    // tabBarIcon: ({ color, focused }) => (
-                    //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
-                    // ),
+                    tabBarIcon: ({ color, focused, size }) => (
+                        <MaterialCommunityIcons name="google-street-view" color={color} focused={focused} size={size} />
+                    ),
                 }}
             />
-            <Tabs.Screen
+            {/* <Tabs.Screen
                 name="create"
                 options={{
                     title: 'Create',
@@ -36,8 +39,8 @@ const _layout = () => {
                     //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
                     // ),
                 }}
-            />
-            <Tabs.Screen
+            /> */}
+            {/* <Tabs.Screen
                 name="update"
                 options={{
                     title: 'Update',
@@ -46,7 +49,7 @@ const _layout = () => {
                     //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
                     // ),
                 }}
-            />
+            /> */}
         </Tabs>
     )
 }

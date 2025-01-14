@@ -37,22 +37,24 @@ const Index = () => {
             <View className="flex-1 bg-white rounded-xl shadow-lg mb-2 p-5 mx-2 space-y-2">
                 <Text className="text-sm font-psemibold text-gray-800">{item.medicine_name || "Unknown Medicine"}</Text>
                 {/* Display category name */}
-                <Text className="text-sm font-pbold text-tertiary">
-                    {categoryName ? `${categoryName}` : "Category: Unknown"}
-                </Text>
-                <Text className="text-sm font-pbold text-tertiary">
-                    {companyNames ? `${companyNames}` : "Company: Unknown"}
-                </Text>
+                <View className="flex-row justify-between items-center">
+                    <Text className="text-[10px] font-pbold text-secondary">
+                        {categoryName ? `${categoryName}` : "Category: Unknown"}
+                    </Text>
+                    <Text className="text-[10px] font-pbold text-darkBg">
+                        {companyNames ? `${companyNames}` : "Company: Unknown"}
+                    </Text>
+                </View>
                 <Text className="text-[10px] text-gray-600">
                     {item.medicine_details || "No details."}
                 </Text>
-                <View className="flex-row justify-between items-center">
-                    <Text className="text-xs font-pmedium text-secondary">Supplier:</Text>
-                    <Text className="text-xs font-semibold text-secondary">{item.supplier_price}TK</Text>
+                <View className="flex-row gap-1 items-center">
+                    <Text className="text-[11px] font-pmedium text-secondary">Supplier :</Text>
+                    <Text className="text-[11px] font-semibold text-secondary">{item.supplier_price}TK</Text>
                 </View>
-                <View className="flex-row justify-between items-center">
-                    <Text className="text-xs font-medium text-secondary">Box MRP:</Text>
-                    <Text className="text-xs font-semibold text-secondary">{item.box_mrp}TK</Text>
+                <View className="flex-row gap-1 items-center">
+                    <Text className="text-[11px] font-medium text-secondary">Box MRP :</Text>
+                    <Text className="text-[11px] font-semibold text-secondary">{item.box_mrp}TK</Text>
                 </View>
             </View>
         );
