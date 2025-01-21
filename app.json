@@ -15,7 +15,11 @@
         "projectId": "51253b98-3358-47ed-aac6-d120c46e540b"
       }
     },
-    "plugins": ["expo-font", "expo-router"],
+    "plugins": [
+      "expo-font",
+      "expo-router",
+      "expo-secure-store"
+    ],
     "android": {
       "package": "com.sohanthink.pharmacy",
       "versionCode": 8

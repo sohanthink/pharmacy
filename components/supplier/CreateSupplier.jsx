@@ -5,6 +5,7 @@ import FormField from '../FormField';
 import CustomButton from '../CustomButton';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addSupplier } from '../../utils/api/supplierApi';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const CreateSupplier = ({ companyNames, isLoading }) => {
     const [form, setForm] = useState({
@@ -82,56 +83,67 @@ const CreateSupplier = ({ companyNames, isLoading }) => {
     })) || [];
 
     return (
-        <View className="w-full flex-1 bg-white p-5">
+        <View style={{ flex: 1, backgroundColor: 'white', padding: 16 }} className="w-full h-full pb-24 bg-white p-5">
             <Text className="text-lg font-bold mb-4">Add Supplier</Text>
 
             {error && <Text className="text-red-500 mb-2">{error}</Text>}
             {successMessage && <Text className="text-green-500 mb-2">{successMessage}</Text>}
 
-            <FormField
-                title="Full Name"
-                value={form.supplier_name}
-                handleChangeText={(value) => setForm({ ...form, supplier_name: value })}
-                placeholder="Enter supplier name"
-            />
-            <FormField
-                title="Email Address"
-                value={form.supplier_email}
-                handleChangeText={(value) => setForm({ ...form, supplier_email: value })}
-                placeholder="Enter supplier email"
-                styles="mt-3"
-            />
-            <FormField
-                title="Phone Number"
-                value={form.supplier_phone}
-                handleChangeText={(value) => setForm({ ...form, supplier_phone: value })}
-                placeholder="Enter supplier phone"
-                styles="mt-3"
-            />
-
-            <View className="mt-4">
-                <Text className="font-semibold mb-2">Select a Company</Text>
-                <DropDownPicker
-                    open={open}
-                    value={selectedCompany}
-                    items={DropdownCompanyNames}
-                    setOpen={setOpen}
-                    setValue={setSelectedCompany} // Directly setting the selected company
-                    placeholder="Select a company"
-                    containerStyle={{ marginBottom: 15 }}
-                    style={{ backgroundColor: '#fafafa' }}
-                    dropDownStyle={{ backgroundColor: '#fafafa' }}
-                    listMode="SCROLLVIEW"
-                    disabled={isLoading}
+            <KeyboardAwareScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                extraHeight={150}
+                enableOnAndroid={true}
+                nestedScrollEnabled={true}
+                className="bg-white rounded-xl shadow-md"
+            >
+                <View className="mt-4">
+                    <Text className="font-semibold mb-2">Select a Company</Text>
+                    <DropDownPicker
+                        open={open}
+                        value={selectedCompany}
+                        items={DropdownCompanyNames}
+                        setOpen={setOpen}
+                        setValue={setSelectedCompany} // Directly setting the selected company
+                        placeholder="Select a company"
+                        containerStyle={{ marginBottom: 15 }}
+                        style={{ backgroundColor: '#fafafa' }}
+                        dropDownStyle={{ backgroundColor: '#fafafa' }}
+                        listMode="SCROLLVIEW"
+                        disabled={isLoading}
+                    />
+                </View>
+                <FormField
+                    title="Full Name"
+                    value={form.supplier_name}
+                    handleChangeText={(value) => setForm({ ...form, supplier_name: value })}
+                    placeholder="Enter supplier name"
+                    keyboardType="default"
                 />
-            </View>
+                <FormField
+                    title="Email Address"
+                    value={form.supplier_email}
+                    handleChangeText={(value) => setForm({ ...form, supplier_email: value })}
+                    placeholder="Enter supplier email"
+                    styles="mt-3"
+                    keyboardType="numeric"
+                />
+                <FormField
+                    title="Phone Number"
+                    value={form.supplier_phone}
+                    handleChangeText={(value) => setForm({ ...form, supplier_phone: value })}
+                    placeholder="Enter supplier phone"
+                    styles="mt-3"
+                    keyboardType="numeric"
+                />
 
-            <CustomButton
-                title="Add Supplier"
-                handlePress={submit}
-                containerStyles="mt-4"
-                isLoading={AddSupplierMutation.isPending || isLoading}
-            />
+
+                <CustomButton
+                    title="Add Supplier"
+                    handlePress={submit}
+                    containerStyles="mt-4"
+                    isLoading={AddSupplierMutation.isPending || isLoading}
+                />
+            </KeyboardAwareScrollView>
         </View>
     );
 };

@@ -34,7 +34,7 @@ const Index = () => {
         const companyNames = fetchCompanyNames?.data?.data.find((companyName) => item.medicine_company_id === companyName.id)?.company_name;
 
         return (
-            <View className="flex-1 bg-white rounded-xl shadow-lg mb-2 p-5 mx-2 space-y-2">
+            <View className="flex-1 bg-white rounded-xl shadow-lg p-5 mx-1 space-y-1">
                 <Text className="text-sm font-psemibold text-gray-800">{item.medicine_name || "Unknown Medicine"}</Text>
                 {/* Display category name */}
                 <View className="flex-row justify-between items-center">
@@ -95,7 +95,7 @@ const Index = () => {
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
                 numColumns={2} // Ensure 2 columns
-                columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 10 }} // Adjust row spacing
+                columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 7 }} // Adjust row spacing
                 ListFooterComponent={() =>
                     fetchMedicines?.next_page_url && (
                         <ActivityIndicator size="small" color="#0000ff" className="my-4" />
