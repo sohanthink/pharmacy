@@ -13,7 +13,7 @@ const _layout = () => {
                     // drawerLabelStyle: {
                     //     // marginLeft: -20
                     // },
-                    drawerActiveBackgroundColor: 'green',
+                    drawerActiveBackgroundColor: '#A294F9',
                     drawerActiveTintColor: 'white',
                     drawerInactiveTintColor: 'black',
                 }}
@@ -32,7 +32,7 @@ const _layout = () => {
 
                     }}
                 />
-                <Drawer.Screen
+                {/* <Drawer.Screen
                     name="about"
                     options={{
                         drawerLabel: 'About',
@@ -42,7 +42,7 @@ const _layout = () => {
                         //     <Ionicons name='ios-information-circle' size={size} color={color} />
                         // )
                     }}
-                />
+                /> */}
                 <Drawer.Screen
                     name="supplier"
                     options={{

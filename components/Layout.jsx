@@ -4,16 +4,16 @@ import { View } from "react-native";
 import CustomHeader from "./CustomHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title }) => {
     return (
-        <SafeAreaView style={{ flex: 1 }} className="bg-lightBg h-full w-full">
+        <SafeAreaView className="bg-lightBg h-full w-full">
             {/* Sticky Header */}
             <View className="z-10 w-full">
-                <CustomHeader />
+                <CustomHeader title={title} />
             </View>
 
             {/* Scrollable Content */}
-            <View className="flex-1 px-3">
+            <View className="px-3 h-full">
                 {children}
             </View>
         </SafeAreaView>

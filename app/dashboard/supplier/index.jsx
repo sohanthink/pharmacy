@@ -1,7 +1,5 @@
 import { View, Text, ScrollView, Pressable, ActivityIndicator, RefreshControl, Linking, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import Title from '../../../components/Title';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
 import Layout from '../../../components/Layout';
 
 import { useFetchCompanyNames, useFetchSuppliers } from '../../../utils/hooks';
@@ -57,8 +55,7 @@ const Index = () => {
     }
 
     return (
-        <Layout>
-            <Title text="All Suppliers" />
+        <Layout title="All Suppliers">
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 refreshControl={
@@ -66,14 +63,14 @@ const Index = () => {
                 }
             >
 
-                <View className="flex flex-row flex-wrap justify-between items-center h-28 mt-5">
+                <View className="flex flex-row flex-wrap justify-between items-center h-32">
                     {suppliers?.data?.data.map((supplier) => {
                         // Find the matching company name based on supplier's medicine_company_id
                         const company = companies.find((c) => c.id === supplier.medicine_company_id);
                         return (
                             <View
                                 key={supplier.id}
-                                className="bg-white rounded-lg p-3 mb-2 shadow-md w-[49%] h-full justify-center"
+                                className="bg-white rounded-lg p-3 mb-1 w-[49.5%] h-full justify-center"
                             >
                                 <View className='space-y-2'>
                                     <Text className="text-xs font-psemibold text-gray-800">

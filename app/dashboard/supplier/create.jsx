@@ -16,23 +16,22 @@ const Create = () => {
 
 
     return (
-        <Layout>
-            <Title text="Company & Supplier" style="text-center text-2xl mb-3" />
-            <ScrollView contentContainerStyle={{ flexGrow: 0 }} className="pt-2">
+        <Layout title="Add Supplier">
+            {/* <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="pt-2"> */}
 
-                {/* Add Medicine Company */}
-                <MedicineCompany
+
+            {/* Add supplier  */}
+            <CreateSupplier
+                companyNames={companyNames}
+                isLoading={isLoading}
+            />
+            {/* Add Medicine Company */}
+            {/* <MedicineCompany
                     companyNames={companyNames}
                     isLoading={isLoading}
-                />
+                /> */}
 
-                {/* Add supplier  */}
-                <CreateSupplier
-                    companyNames={companyNames}
-                    isLoading={isLoading}
-                />
-
-            </ScrollView>
+            {/* </ScrollView> */}
         </Layout>
     );
 };

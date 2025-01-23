@@ -83,18 +83,18 @@ const CreateSupplier = ({ companyNames, isLoading }) => {
     })) || [];
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'white', padding: 16 }} className="w-full h-full pb-24 bg-white p-5">
-            <Text className="text-lg font-bold mb-4">Add Supplier</Text>
+        <View style={{ flex: 1 }} className="w-full h-full">
+            {/* <Text className="text-lg font-bold mb-4">Add Supplier</Text> */}
 
             {error && <Text className="text-red-500 mb-2">{error}</Text>}
             {successMessage && <Text className="text-green-500 mb-2">{successMessage}</Text>}
 
             <KeyboardAwareScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
-                extraHeight={150}
+                extraHeight={50}
                 enableOnAndroid={true}
                 nestedScrollEnabled={true}
-                className="bg-white rounded-xl shadow-md"
+                className="rounded-xl shadow-md"
             >
                 <View className="mt-4">
                     <Text className="font-semibold mb-2">Select a Company</Text>
@@ -125,7 +125,6 @@ const CreateSupplier = ({ companyNames, isLoading }) => {
                     handleChangeText={(value) => setForm({ ...form, supplier_email: value })}
                     placeholder="Enter supplier email"
                     styles="mt-3"
-                    keyboardType="numeric"
                 />
                 <FormField
                     title="Phone Number"
@@ -133,7 +132,6 @@ const CreateSupplier = ({ companyNames, isLoading }) => {
                     handleChangeText={(value) => setForm({ ...form, supplier_phone: value })}
                     placeholder="Enter supplier phone"
                     styles="mt-3"
-                    keyboardType="numeric"
                 />
 
 

@@ -51,7 +51,7 @@ const LeafSetting = () => {
     });
 
     return (
-        <View className="bg-white shadow-md rounded-xl p-3 mt-5">
+        <View className="bg-white rounded-xl p-3 mt-3">
             {/* Display success or error messages */}
             {successMessage && (
                 <Text className="text-green-500 text-sm text-center font-pmedium py-2">
@@ -88,8 +88,8 @@ const LeafSetting = () => {
                 {/* Add Leaf Button */}
                 <CustomButton
                     title="Add Leaf"
-                    containerStyles="mt-4 bg-[#E0E0E0]"
-                    textStyles="text-base text-darkBg"
+                    containerStyles="mt-4"
+                    textStyles="text-base text-secondary"
                     handlePress={addLeaf}
                     isLoading={LeafAddMutation.isPending}
                 />
@@ -100,11 +100,11 @@ const LeafSetting = () => {
                 data={maindata}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View className="bg-primary mt-2 rounded-md">
+                    <View className="bg-secondary mt-2 rounded-md">
                         {isLoading ? (
                             <ActivityIndicator size="large" color="#0000ff" />
                         ) : (
-                            <Text className="font-pbold text-lg p-4 text-lightBg">
+                            <Text className="font-pbold text-lg p-4 text-darkBg">
                                 {item.leaf_type} : {item.total_number} medicines
                             </Text>
                         )}

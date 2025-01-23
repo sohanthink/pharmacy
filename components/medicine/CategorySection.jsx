@@ -43,10 +43,10 @@ const CategorySection = () => {
     };
 
     return (
-        <View className="bg-white rounded-xl p-3 shadow-md">
+        <View className="bg-white rounded-xl p-3">
             {successMessage && <Text style={{ color: 'green' }}>{successMessage}</Text>}
             {error && <Text style={{ color: 'red' }}>{error}</Text>}
-            <View className="py-5">
+            <View className="">
                 <FormField
                     title="Add categories"
                     placeholder="Eg: Box-24, leaf-10, capsule-10"
@@ -57,8 +57,8 @@ const CategorySection = () => {
                 <CustomButton
                     handlePress={addCategories}
                     title={categoryAddMutation.isLoading ? 'Adding...' : 'Add'}
-                    containerStyles="bg-[#E0E0E0] mt-3"
-                    textStyles="text-base text-darkBg"
+                    containerStyles="mt-3"
+                    textStyles="text-base text-white"
                     isLoading={categoryAddMutation.isLoading || isDisabled}
                 />
             </View>
@@ -67,8 +67,8 @@ const CategorySection = () => {
                     <ActivityIndicator size="large" color="#0000ff" />
                 ) : (
                     medicineCategories?.data?.data.map((item) => (
-                        <View key={item.id} className="bg-secondary mr-2 rounded-3xl flex-row mx-1 justify-center items-center p-3">
-                            <Text className="font-pbold text-md text-lightBg">
+                        <View key={item.id} className="bg-secondary mr-2 rounded-xl flex-row mx-1 justify-center items-center p-3 mt-3">
+                            <Text className="font-pbold text-md text-darkBg">
                                 {item.category_name}
                             </Text>
                         </View>

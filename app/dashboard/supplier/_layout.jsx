@@ -53,16 +53,19 @@ const _layout = () => {
                 }}
             />
 
-            {/* <Tabs.Screen
-                name="update"
+            <Tabs.Screen
+                name="medicine"
                 options={{
-                    title: 'Update',
+                    title: 'Md. Company',
                     headerShown: false,
                     // tabBarIcon: ({ color, focused }) => (
                     //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
                     // ),
+                    tabBarIcon: ({ size, color }) => (
+                        <AntDesign name="addusergroup" size={size} color={color} />
+                    )
                 }}
-            /> */}
+            />
         </Tabs>
     )
 }

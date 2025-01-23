@@ -108,8 +108,7 @@ const MedicineCreate = () => {
     };
 
     return (
-        <Layout>
-            <Title text="Add New Medicine" style="my-2 text-center" />
+        <Layout title="Add New Medicine">
             <View className='p-1'>
                 {/* Success and Error Messages */}
                 {successMessage && (
@@ -128,7 +127,7 @@ const MedicineCreate = () => {
                     extraHeight={150}
                     enableOnAndroid={true}
                     nestedScrollEnabled={true}
-                    className="bg-white rounded-xl p-4 shadow-md"
+                    className="rounded-xl shadow-md"
                 >
                     {/* Medicine Category Dropdown */}
                     <View style={{ flexShrink: 1 }} className='z-[6000]'>
@@ -197,7 +196,7 @@ const MedicineCreate = () => {
                     <View className='z-[1000]'>
                         <Text className='py-2 font-pbold'>Choose a Medicine Company</Text>
                         <DropDownPicker
-                            className='bg-slate-100 border-[0.3px]'
+                            className='bg-white border-[0.3px]'
                             {...sharedDropDownProps}
                             open={companyOpen}
                             setOpen={setCompanyOpen}

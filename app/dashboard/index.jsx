@@ -12,16 +12,11 @@ const index = () => {
     console.log(suppliers?.data?.total);
 
     return (
-        <Layout>
+        <Layout title="Dashboard">
             <ScrollView>
                 <StatusBar style="auto" className="text-darkBg" />
 
-                <View className="mb-4">
-                    <Text className="text-3xl font-extrabold text-gray-800 mb-1">Dashboard</Text>
-                    <Text className="text-gray-500 text-lg">Glimpse of your system</Text>
-                </View>
-
-
+                <Text className="text-gray-500 text-lg mb-4">Glimpse of your system</Text>
                 <View className="flex-row justify-between">
                     {/* Total Supplier Card */}
                     <TouchableOpacity

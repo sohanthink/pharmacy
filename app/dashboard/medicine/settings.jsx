@@ -17,8 +17,7 @@ const Settings = () => {
     };
 
     return (
-        <Layout>
-            <Title text="Medicine Settings" style='my-2 text-center' />
+        <Layout title="Medicine Settings">
             <FlatList
                 data={sections}
                 renderItem={renderItem}
