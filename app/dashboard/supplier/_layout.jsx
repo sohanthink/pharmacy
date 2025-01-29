@@ -1,7 +1,7 @@
 import { Platform } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
-import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons'
+import { AntDesign, Feather, MaterialIcons, Ionicons } from '@expo/vector-icons'
 import * as NavigationBar from 'expo-navigation-bar';
 
 if (Platform.OS === 'android') {
@@ -42,7 +42,7 @@ const _layout = () => {
             <Tabs.Screen
                 name="create"
                 options={{
-                    title: 'Create',
+                    title: 'Create supplier',
                     headerShown: false,
                     // tabBarIcon: ({ color, focused }) => (
                     //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
@@ -56,13 +56,14 @@ const _layout = () => {
             <Tabs.Screen
                 name="medicine"
                 options={{
-                    title: 'Md. Company',
+                    title: 'Med. Company',
                     headerShown: false,
                     // tabBarIcon: ({ color, focused }) => (
                     //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
                     // ),
                     tabBarIcon: ({ size, color }) => (
-                        <AntDesign name="addusergroup" size={size} color={color} />
+                        <Ionicons name="medkit" size={size} color={color} />
+                        // <AntDesign name="addusergroup" size={size} color={color} />
                     )
                 }}
             />

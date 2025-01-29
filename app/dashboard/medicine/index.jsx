@@ -1,40 +1,68 @@
-import React, { useState } from 'react';
-import { FlatList, ActivityIndicator, Text, View } from 'react-native';
-import Layout from '../../../components/Layout';
-import { useFetchCompanyNames, useFetchMedicineCategories, useFetchMedicines } from '../../../utils/hooks';
+import React, { useState, useEffect } from "react";
+import { FlatList, ActivityIndicator, Text, View } from "react-native";
+import Layout from "../../../components/Layout";
+import { useFetchCompanyNames, useFetchMedicineCategories, useFetchMedicines } from "../../../utils/hooks";
+import api from "../../../utils/api/axiosInstance";
 
 const MedicineInventory = () => {
-    const [page, setPage] = useState(1); // State to track pagination
+    const [allMedicines, setAllMedicines] = useState([]); // Cumulative medicines
+    const [page, setPage] = useState(1); // Tracks the current page
+    const [isLoadingMore, setIsLoadingMore] = useState(false); // Loading state for pagination
+    const [hasMoreData, setHasMoreData] = useState(true); // Track if more data is available
 
-    // Custom hooks to fetch data
-    const {
-        data: medicines,
-        isLoading: isMedicinesLoading,
-        error: medicinesError,
-        refetch: refetchMedicines,
-    } = useFetchMedicines(page);
+    const { data: medicines, isLoading: isMedicinesLoading, error: medicinesError, refetch: refetchMedicines } =
+        useFetchMedicines(page);
 
-    const {
-        data: medicineCategories,
-        isLoading: isCategoriesLoading,
-    } = useFetchMedicineCategories();
-
+    const { data: medicineCategories } = useFetchMedicineCategories();
     const { data: companyNames } = useFetchCompanyNames();
 
-    /**
-     * Handles pagination by incrementing the current page
-     * if the next page URL is available.
-     */
-    const handleLoadMore = () => {
-        if (medicines?.next_page_url) {
-            setPage((prevPage) => prevPage + 1);
+    // Append new medicines when the page changes or new data is fetched
+    useEffect(() => {
+        if (medicines?.data?.data) {
+            setAllMedicines((prev) => {
+                // Reset if page is 1, otherwise append
+                if (page === 1) {
+                    return medicines.data.data; // Replace with new data
+                } else {
+                    const newMedicines = medicines.data.data.filter(
+                        (newMedicine) => !prev.some((medicine) => medicine.id === newMedicine.id)
+                    );
+                    return [...prev, ...newMedicines]; // Append new data
+                }
+            });
+            setIsLoadingMore(false); // Reset loading state
+        }
+    }, [medicines, page]); // Trigger when medicines or page changes
+
+    const updateMedicinesList = (newMedicines) => {
+        setAllMedicines((prev) => {
+            const filteredNewMedicines = newMedicines.filter(
+                (newMedicine) => !prev.some((medicine) => medicine.id === newMedicine.id)
+            );
+            return [...prev, ...filteredNewMedicines];
+        });
+    };
+
+    const handleLoadMore = async () => {
+        if (isLoadingMore || !hasMoreData || isMedicinesLoading) return; // Prevent unnecessary API calls
+        setIsLoadingMore(true);
+
+        const nextPage = page + 1;
+        setPage(nextPage);
+        try {
+            const response = await api.get(`/user/medicine?page=${nextPage}`);
+            if (response?.data?.data?.data) {
+                updateMedicinesList(response.data.data.data);
+            } else {
+                setHasMoreData(false); // No more data available
+            }
+        } catch (error) {
+            console.error("Failed to fetch next page:", error);
+        } finally {
+            setIsLoadingMore(false);
         }
     };
 
-    /**
-     * Renders a single medicine item within the FlatList.
-     * Maps the medicine category and company name using their IDs.
-     */
     const renderMedicine = ({ item }) => {
         const categoryName = medicineCategories?.data?.data.find(
             (category) => category.id === item.category_id
@@ -46,41 +74,36 @@ const MedicineInventory = () => {
 
         return (
             <View className="flex-1 space-y-[4px] bg-white rounded-xl p-4 mx-[2px]">
-                <Text className="text-sm font-psemibold text-gray-800">
+                <Text className="text-sm font-semibold text-gray-800">
                     {item.medicine_name || "Unknown Medicine"}
                 </Text>
 
                 <View className="flex-row gap-x-1">
-                    <Text className="text-[10px] font-pbold text-primary">
+                    <Text className="text-[10px] font-semibold text-darkBg">
                         {categoryName || "Category: Unknown"}
                     </Text>
-                    <Text className="text-[10px] font-pbold text-darkBg">
+                    <Text className="text-[10px] font-semibold text-darkBg">
                         ({companyName || "Company: Unknown"})
                     </Text>
                 </View>
 
                 <Text className="text-[10px] text-gray-600">
-                    {item.medicine_details || "No details."}
+                    {item.medicine_details || "No details available."}
                 </Text>
 
                 <View className="flex-row gap-1 items-center">
-                    <Text className="text-[11px] font-pmedium tetext-primary">Supplier:</Text>
-                    <Text className="text-[11px] font-semibold tetext-primary">
-                        {item.supplier_price} TK
-                    </Text>
+                    <Text className="text-[11px] font-medium text-darkBg">Supplier:</Text>
+                    <Text className="text-[11px] font-bold text-darkBg">{item.supplier_price} TK</Text>
                 </View>
 
                 <View className="flex-row gap-1 items-center">
-                    <Text className="text-[11px] font-medium tetext-primary">Box MRP:</Text>
-                    <Text className="text-[11px] font-semibold tetext-primary">
-                        {item.box_mrp} TK
-                    </Text>
+                    <Text className="text-[11px] font-medium text-darkBg">Box MRP:</Text>
+                    <Text className="text-[11px] font-bold text-darkBg">{item.box_mrp} TK</Text>
                 </View>
             </View>
         );
     };
 
-    // Handle loading state for initial fetch
     if (isMedicinesLoading && page === 1) {
         return (
             <Layout>
@@ -92,7 +115,6 @@ const MedicineInventory = () => {
         );
     }
 
-    // Handle error state
     if (medicinesError) {
         return (
             <Layout>
@@ -105,27 +127,26 @@ const MedicineInventory = () => {
         );
     }
 
-    // Main UI rendering the medicine inventory list
     return (
         <Layout title="Medicine Inventory">
             <FlatList
-                data={medicines?.data?.data || []} // List of medicines
-                renderItem={renderMedicine} // Render each item
-                keyExtractor={(item) => item.id.toString()} // Unique key for each item
-                showsVerticalScrollIndicator={false} // Hide scroll indicator
-                onRefresh={refetchMedicines} // Pull-to-refresh functionality
-                refreshing={isMedicinesLoading} // Loading indicator during refresh
-                onEndReached={handleLoadMore} // Load more on scroll
-                onEndReachedThreshold={0.5} // Threshold for loading more
-                numColumns={2} // Display items in 2 columns
-                columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 3 }} // Style for row
+                data={allMedicines}
+                renderItem={renderMedicine}
+                keyExtractor={(item) => item.id.toString()}
+                showsVerticalScrollIndicator={true}
+                onRefresh={() => {
+                    setPage(1);
+                    setAllMedicines([]);
+                    refetchMedicines();
+                }}
+                refreshing={isMedicinesLoading && page === 1}
+                onEndReached={handleLoadMore}
+                // onEndReachedThreshold={0.1}
+                numColumns={2}
+                columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 3 }}
                 ListFooterComponent={() =>
-                    medicines?.next_page_url && (
-                        <ActivityIndicator size="small" color="#0000ff" className="my-4" />
-                    )
+                    isLoadingMore && <ActivityIndicator size="small" color="#0000ff" />
                 }
-                ListFooterComponentStyle={{ paddingBottom: 0 }} // Footer style
-                className="pt-4"
             />
         </Layout>
     );

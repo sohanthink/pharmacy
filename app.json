@@ -5,6 +5,7 @@
     "scheme": "pharmacy",
     "version": "1.0.0",
     "newArchEnabled": true,
+    "icon": "./assets/images/pharmacy.png",
     "splash": {
       "image": "./assets/images/pharmacy.png",
       "resizeMode": "contain",
@@ -15,11 +16,7 @@
         "projectId": "51253b98-3358-47ed-aac6-d120c46e540b"
       }
     },
-    "plugins": [
-      "expo-font",
-      "expo-router",
-      "expo-secure-store"
-    ],
+    "plugins": ["expo-font", "expo-router", "expo-secure-store"],
     "android": {
       "package": "com.sohanthink.pharmacy",
       "versionCode": 8

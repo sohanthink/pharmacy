@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons'
 
 const _layout = () => {
     return (
@@ -30,16 +31,16 @@ const _layout = () => {
                     ),
                 }}
             />
-            {/* <Tabs.Screen
+            <Tabs.Screen
                 name="create"
                 options={{
-                    title: 'Create',
+                    title: 'Add Stuff',
                     headerShown: false,
-                    // tabBarIcon: ({ color, focused }) => (
-                    //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
-                    // ),
+                    tabBarIcon: ({ size, color }) => (
+                        <MaterialCommunityIcons name="human-male-male" size={size} color={color} />
+                    ),
                 }}
-            /> */}
+            />
             {/* <Tabs.Screen
                 name="update"
                 options={{
