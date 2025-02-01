@@ -3,12 +3,12 @@ import { View, Text, Alert } from 'react-native';
 import Layout from '../../../components/Layout';
 import FormField from '../../../components/FormField';
 import CustomButton from '../../../components/CustomButton';
-import Title from '../../../components/Title';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useFetchMedicineCategories, useFetchLeafSettings, useFetchCompanyNames } from '../../../utils/hooks';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useMutation } from '@tanstack/react-query';
 import { addMedicine } from '../../../utils/api/medicineApi';
+
 
 const MedicineCreate = () => {
     const [form, setForm] = useState({
@@ -150,26 +150,6 @@ const MedicineCreate = () => {
                         />
                     </View>
 
-                    {/* Leaf Setting Dropdown */}
-                    {/* <View className='z-[2000]'>
-                        <Text className='py-2 font-pbold'>Choose a Leaf Setting</Text>
-                        <DropDownPicker
-                            className='bg-slate-100 border-[0.3px]'
-                            {...sharedDropDownProps}
-                            open={leafSettingOpen}
-                            setOpen={setLeafSettingOpen}
-                            value={form.leaf_setting_id}
-                            setValue={(callback) => {
-                                const newValue = callback(form.leaf_setting_id);
-                                handleInputChange('leaf_setting_id', newValue);
-                            }}
-                            items={leafSettings?.data?.data.map(setting => ({
-                                label: setting.total_number,
-                                value: setting.id,
-                            })) || []}
-                            loading={isLeafSettingsLoading}
-                        />
-                    </View> */}
 
                     {/* Leaf Setting Dropdown */}
                     <View>
