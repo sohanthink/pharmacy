@@ -22,7 +22,7 @@ const Settings = () => {
                 data={sections}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.key}
-                contentContainerStyle={{ paddingBottom: 10 }}
+                contentContainerStyle={{ paddingBottom: 50 }}
                 keyboardShouldPersistTaps="handled"
             />
         </Layout>

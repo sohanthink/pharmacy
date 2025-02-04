@@ -45,20 +45,6 @@ const index = () => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-
-                        {/* Total stuff Card */}
-                        <TouchableOpacity
-                            className="bg-secondary rounded-lg shadow-lg w-[48%] p-5"
-                            onPress={() => router.push('/dashboard/stuff')} // Navigate to Medicines page
-                        >
-                            <View className="flex-row justify-between items-center">
-                                <View>
-                                    <Text className="text-2xl font-bold text-darkBg">Total Stuff</Text>
-                                    <Text className="text-4xl font-bold text-darkBg">{fetchMedicines?.data?.total}</Text>
-                                    <Text className="text-darkBg opacity-80">Keep track of your medicines</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </Layout>

@@ -136,7 +136,7 @@ const MedicineInventory = () => {
                 showsVerticalScrollIndicator={true}
                 onRefresh={() => {
                     setPage(1);
-                    setAllMedicines([]);
+                    // setAllMedicines([]);
                     refetchMedicines();
                 }}
                 refreshing={isMedicinesLoading && page === 1}
@@ -147,6 +147,7 @@ const MedicineInventory = () => {
                 ListFooterComponent={() =>
                     isLoadingMore && <ActivityIndicator size="small" color="#0000ff" />
                 }
+                contentContainerStyle={{ paddingBottom: 50 }}
             />
         </Layout>
     );

@@ -41,16 +41,6 @@ const _layout = () => {
                     ),
                 }}
             />
-            {/* <Tabs.Screen
-                name="update"
-                options={{
-                    title: 'Update',
-                    headerShown: false,
-                    // tabBarIcon: ({ color, focused }) => (
-                    //     <TabIcon name="Dashboard" color={color} focused={focused} icon={home} />
-                    // ),
-                }}
-            /> */}
         </Tabs>
     )
 }

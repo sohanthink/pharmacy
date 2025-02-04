@@ -65,6 +65,17 @@ const _layout = () => {
                         // )
                     }}
                 />
+                <Drawer.Screen
+                    name="stuff"
+                    options={{
+                        drawerLabel: 'Stuff',
+                        title: 'Stuff',
+                        headerShown: false,
+                        // drawerIcon: ({ size, color }) => (
+                        //     <Ionicons name='ios-information-circle' size={size} color={color} />
+                        // )
+                    }}
+                />
             </Drawer>
         </GestureHandlerRootView >
     )
