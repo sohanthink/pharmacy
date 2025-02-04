@@ -21,3 +21,13 @@ export const addStuff = async (
     throw new Error(error?.response?.data?.message || "Network Error");
   }
 };
+
+//fetch all stuff
+export const fetchStuff = async () => {
+  try {
+    const response = await api.get("/user/index");
+    return response.data;
+  } catch (error) {
+    throw new Error(error?.response?.data?.message || "Network Error");
+  }
+};

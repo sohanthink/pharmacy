@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Alert } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../../components/Layout'
 import FormField from '../../../components/FormField'
@@ -134,7 +134,7 @@ const Create = () => {
                     handlePress={handleSubmit}
                     containerStyles="bg-primary mt-5 mb-10"
                     textStyles="text-white"
-                    isLoading={addStuffMutation.isPending}
+                    isLoading={addStuffMutation.isLoading} // Corrected line
                 />
             </KeyboardAwareScrollView>
         </Layout >

@@ -25,13 +25,6 @@ const Create = () => {
                 companyNames={companyNames}
                 isLoading={isLoading}
             />
-            {/* Add Medicine Company */}
-            {/* <MedicineCompany
-                    companyNames={companyNames}
-                    isLoading={isLoading}
-                /> */}
-
-            {/* </ScrollView> */}
         </Layout>
     );
 };
