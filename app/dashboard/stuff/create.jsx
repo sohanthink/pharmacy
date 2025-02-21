@@ -1,4 +1,4 @@
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import Layout from '../../../components/Layout'
 import FormField from '../../../components/FormField'
@@ -78,6 +78,7 @@ const Create = () => {
 
     return (
         <Layout title="Add Stuff">
+            <StatusBar className="text-darkBg" />
             {successMessage && (
                 <View className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                     <Text className="font-bold">{successMessage}</Text>

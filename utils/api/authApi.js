@@ -9,6 +9,7 @@ export const Login = async (email, password) => {
     });
     return response.data;
   } catch (error) {
+    console.log("Login error:", error);
     console.error("API error/while login:", error);
     throw error.response ? error.response.data : new Error("Network Error");
   }
